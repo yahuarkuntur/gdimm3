@@ -35,15 +35,14 @@ class WidgetBuilder:
     def _create_label(self, widget):
         label = Gtk.Label(widget["etiqueta"])
         font_size = int(widget["fontSize"]) * FONT_FACTOR
-        markup = '<span color="#000" size="%s">%s</span>' % (str(font_size), widget["etiqueta"])
+        markup = (
+            '<span color="#000" size="%s">%s</span>' %
+            (str(font_size), widget["etiqueta"])
+        )
         label.set_markup(markup)
         return Object(label, widget)
 
     def _create_combobox(self, widget):
-        countries = ["Austria", "Brazil", "Belgium", "France", "Germany",
-            "Switzerland", "United Kingdom", "United States of America",
-            "Uruguay"]
-
         width = int(widget["width"]) / W_FACTOR
         height = int(widget["height"]) / H_FACTOR
 
@@ -52,8 +51,7 @@ class WidgetBuilder:
         combo.set_tooltip_text(widget["mensajeAyuda"])
         combo.set_size_request(width, height)
 
-        for country in countries:
-            combo.append_text(country)
+        combo.append_text("")
         combo.set_active(0)
 
         obj = Object(combo, widget)
@@ -61,9 +59,10 @@ class WidgetBuilder:
         return obj
 
     def _create_entry(self, widget):
-        entry = Gtk.Entry()
         width = int(widget["width"]) / W_FACTOR
         height = int(widget["height"]) / H_FACTOR
+
+        entry = Gtk.Entry()
         entry.set_width_chars(W_CHARS)
         entry.set_size_request(width, height)
         entry.set_tooltip_text(widget["mensajeAyuda"])
