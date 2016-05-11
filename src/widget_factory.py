@@ -22,7 +22,7 @@ class Object(object):
         self.left = int(widget["left"]) / X_FACTOR
 
 
-class WidgetBuilder:
+class WidgetFactory:
 
     def __init__(self, formid):
         self.formid = formid
@@ -81,8 +81,8 @@ class WidgetBuilder:
         obj.top = obj.top - 10
         return obj
 
-    def build(self):
-        tree = etree.parse(os.path.join('XML', 'CMPFRM.xml'))
+    def build_widgets(self):
+        tree = etree.parse(os.path.join('xml', 'CMPFRM.xml'))
         form = tree.find("version[@codigo='%s']" % str(self.formid))
 
         widgets = []
