@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 
 import os
 import gi
@@ -26,10 +27,18 @@ class ContribuyenteWindow(BaseWindow):
         contribuyente_window.show()
 
     def on_btnEditar_clicked(self, obj, data=None):
-        print "on_btnEditar_clicked"
-
-    def on_btnSave_clicked(self, obj, data=None):
-        print "on_btnSave_clicked"
+        treeselection = self.trContribuyentes.get_selection()
+        (model, treeiter) = treeselection.get_selected()
+        if treeiter is not None:
+            contrib = self.contribuyentes.find_by_ruc(model[treeiter][0])
+            if contrib:
+                contribuyente_window = EditarContribuyenteWindow()
+                contribuyente_window.set_data(contrib)
+                contribuyente_window.set_model(self.contribuyentes)
+                contribuyente_window.show()
+        else:
+            # TODO mostrar mensaje de error
+            pass
 
     def on_btnClose_clicked(self, obj, data=None):
         self.window.destroy()
@@ -37,8 +46,8 @@ class ContribuyenteWindow(BaseWindow):
     def on_btnBorrar_clicked(self, obj, data=None):
         print "on_btnBorrar_clicked"
 
-    def on_trContribuyentes_select_cursor_row(self, widget, data=None):
-        print "on_trContribuyentes_select_cursor_row"
+    #def on_trContribuyentes_select_cursor_row(self, widget, data=None):
+    #    print "on_trContribuyentes_select_cursor_row"
 
     def on_trContribuyentes_row_activated(self, treeview, treeiter, path, data=None):
         treeselection = treeview.get_selection()
@@ -71,7 +80,7 @@ class ContribuyenteWindow(BaseWindow):
 
         # create the TreeViewColumn to display the data
         self.columna_ruc = Gtk.TreeViewColumn('RUC')
-        self.columna_nombre = Gtk.TreeViewColumn('Nombre')
+        self.columna_nombre = Gtk.TreeViewColumn('Razón Social')
 
         # add tvcolumn to treeview
         self.trContribuyentes.append_column(self.columna_ruc)
