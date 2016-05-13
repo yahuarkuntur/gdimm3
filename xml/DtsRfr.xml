@@ -1,0 +1,967 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<datos_referenciales version="Versión 22 (Septiembre 2012)">
+	<!--Versión 0 (01 NOVIEMBRE 2003).- Version con la que se inicio la primera distribución del DIMM
+	     VERSION 1 (08 MARZO 2003) .- Version en la que se registra los siguientes cambios de acuerdo al Memo 
+	     								    93-NACSTR-04:
+	     								    * Nombre de versión	
+								           * Permite la instalación en Windows NT Reportado por Marco Vaca
+								           * Mensaje al cerrar pantalla de ingreso de formulario.
+								           * Ingreso de caracteres como el "&" en la razón social.
+								           * Impresión de razón social en modo Edición
+								           * Orden de los botones en la pantalla de mantenimiento de RUC del 											Contribuyente.
+								           * UPL Envió Declaración
+								           * Impresiòn Ced rep legal y Ced contador.
+								           * Se desabilito el formulario 101 dependiendo del tercer digito del RUC
+								           * Se Puso combos en los ca,mpos 923, 924. Control del dia en funciòn 										del mes campo 925 formulario 101
+								           * Permite el ingreso de 4 decimales en el campo 301 formulario 104
+								           * Se corrigió Impresiòn de los campos 725, 726 del fotmulario 101.
+								           * Si se trata de una original se desabilita el campo 901
+	VERSION 2 (20 Agosto 2004) .-  * Se actualiza porcentajes de (ICE Rubios.- 05200201 e ICE BEbidas 										 05200201), los archivos afectados son: CAL0501, CAL0503, VAL0501, 									VAL0503
+									* Se actualiza el ejecutable por la etiqueta que despliega el formulario deICE 									 el archivo afectado es: DIMM.exe
+	VERSION 3 (01 enero 2005) .-  * Se realiza el cambio de version de formulario para el 01 y 02
+	VERSION 4 (22 Febrero 2005) .-  * Campo 779 (Gasto en administracion y ventas) y 901 (Pago Previo) del  Formulario 101 
+	VERSION 5 (11 marzo 2005) .-  * Archivo HLP, Formulario 103 campo 377 Abiero, Convenio de doble tributacion se añadio el pais Belgica,
+									Cambio de severidad de Grave a Leve en los campos 921,922,923,924,925 del formulario 101. 
+									Se corrigio texto de impresión 	
+									Campo 779 (Gasto en administracion y ventas) del  Formulario 101 
+
+	VERSION 6 (20 mayo 2005) .-  * En el 103 en los campos  401,403,405, se igualan sus respectivas fórmulas incluyendo todos 
+									los paises que tienen convenio de doble tributación en cada una
+									En el 101 se cambia a leve la severidad del campo 897
+									
+	VERSION 7 (23 enero 2006) .- *  Formulario 102 versionVigente="02200601"
+									Formulario 102A versionVigente="02200602"
+									Formulario 103 versionVigente="03200601" 
+									Formulario 104 versionVigente="04200601" IVA MENSUAL
+									Formulario 104 versionVigente="04200602" IVA SEMESTRAL
+									Formulario 104AM versionVigente="04200603" 104A IVA MENSUAL
+									Formulario 104AS versionVigente="04200604" 104A IVA SEMESTRAL
+									Formulario 105 versionVigente="05200601" CRUBIOS
+													versionVigente="05200602"
+													versionVigente="05200603"
+													versionVigente="05200604"
+													versionVigente="05200605"
+													versionVigente="05200607"
+													versionVigente="05200608"
+													versionVigente="05200609"
+								    Formulario 106  versionVigente="06200601" 
+    VERSION 9 (14 ENERO 2008).- Formulario 101 versionVigente="01200801"
+								Formulario 102 versionVigente="02200801"
+								Formulario 102 versionVigente="02200802"
+								Formulario 105 versionVigente="05200801".- Se maneja 1 sola version para todos los formularios 105
+ VERSION 10(5 DE AGOSTO 2008).- FORMULARIO 105, FORMULARIO 106 SE ADICIONAN LOS IMPUESTOS: 3077,3078,3079,3080 PARA EL 3074 SE MODIFICA EL % A 10%
+ VERSION 12(ENERO 2009).-NUEVOS FORMULARIOS 101,102,103,104M,104AS,104AM
+ VERSION 13(MAYO 2009).-Se permite crear contribuyentes con cedulas y pasaportes
+				Se permite generar los archivos de declaraciones de los formularios 102A y 108 para los contribuyentes con cedulas y pasaportes
+				Se restringe la presentacion del formulario 101 para todos los contribuyentes con ruc cuyo tercer digito de la identificacion no sea '6' o '9'
+ VERSION 16 (ABRIL 2010).- Se retiran a los Bancos Amazonas y Territorial por ya no contar con el convenio de debito
+ VERSION 17 (JUNIO 2010).- Se modifican los cálculos para los campos 373 y 353 del formulario 103
+ VERSION 18 (FEBRERO 2011).- Se modifican los formularios 101, 102, 102A y 103.
+ VERSION 19 (MARZO 2011).- Se modifican los mensajes de advertencia para los formularios 101 y 102
+ VERSION 20 (ABRIL 2011).- Se modifican los calculos y validaciones para los formularios 101 y 102
+ VERSION 21 (JUNIO 2011).- Se modifican los calculos y validaciones para el formulario 102
+ VERSION 22 (FEBRERO 2012).- Se cambian las versiones de los formularios 101, 102, 103, 104.
+ *************************************************************************************************
+ VERSION JAVA 1.0 (DIMM-FORMULARIO v24) (Febrero 2013).- Primera Version Java (Johanna Chagnay, Ricardo Vergara, Edgar Paredes, Salomon Herrera)
+   Aplicacion retrocompatible en la mayor parte de la configuracion. 
+   Cambios en este archivo:
+     * Se aumenta formulario 104A mensual en la lista de formularios (de preferencia utilizar solamente periodicidad ANUAL, MENSUAL Y SEMESTRAL y YA NO MENSUAL_SEMESTRAL)
+     * Se aumenta el atributo "idsoportada" en datosFormularios.formulario		
+     * Se aumenta el atributo "soporteAnticipada" en datosFormularios.formulario 
+     * Se aumenta el dato_forma_pago 0 sin ningun valor para que se muestre por defecto
+     * Se aumenta el dato_bancos 0 sin ningun valor para mostrar por defecto
+     * se aumenta los campos de codigo -1 en los elementos que son identificables (datos para combos)
+	-->
+	<datosFormularios codigo="5">
+		<formulario codigo="02" nombre="FORMULARIO 102"
+			periodicidad="ANUAL" version="02201601" codigo_impuesto="1011"
+			descripcion_impuesto="Impuesto a la Renta  Personas Naturales"
+			descripcion_version="FORMULARIO RENTA PERSONAS NATURALES VIGENTE DESDE FEBRERO 2011"
+			idSoportada="R" soporteAnticipada="ADV" />
+		<formulario codigo="04" nombre="FORMULARIO 104"
+			periodicidad="MENSUAL" version="04201601" codigo_impuesto="2011"
+			descripcion_impuesto="Impuesto al Valor Agregado"
+			descripcion_version="FORMULARIO DE IMPUESTO AL VALOR AGREGADO MENSUAL"
+			idSoportada="R" soporteAnticipada="ERR" />
+		<formulario codigo="04" nombre="FORMULARIO 104A"
+			periodicidad="MENSUAL" version="04201603" codigo_impuesto="2011"
+			descripcion_impuesto="Impuesto al Valor Agregado (Mensual)(No obligados a llevar contabilidad)"
+			descripcion_version="FORMULARIO DE IMPUESTO AL VALOR AGREGADO MENSUAL"
+			idSoportada="R" soporteAnticipada="ERR" />
+		<formulario codigo="04" nombre="FORMULARIO 104A"
+			periodicidad="SEMESTRAL" version="04201602" codigo_impuesto="2011"
+			descripcion_impuesto="Impuesto al Valor Agregado (Semestral)(No obligados a llevar contabilidad)"
+			descripcion_version="FORMULARIO DE IMPUESTO AL VALOR AGREGADO SEMESTRAL"
+			idSoportada="R" soporteAnticipada="ADV" />
+		<formulario codigo="08" nombre="FORMULARIO 108"
+			periodicidad="MENSUAL" version="08200201" codigo_impuesto="1088"
+			descripcion_impuesto="I.R. sobre ingresos de herencias, legados y donaciones"
+			descripcion_version="IMPUESTO A LA RENTA SOBRE INGRESOS PROVENIENTES DE HERENCIAS"
+			idSoportada="RCP" soporteAnticipada="SOP" />
+	</datosFormularios>
+	<datosFormulariosVersiones codigo="10">
+		<formularioVersion codigo="02" nombre="FORMULARIO 102"
+			periodicidad="ANUAL" versionVigente="02201601"
+			descripcion_impuesto="Impuesto a la Renta Personas Naturales">
+			<version_formulario>
+				<codigo_version>02201601</codigo_version>
+				<codigo_impuesto>1011</codigo_impuesto>
+				<descripcion_version>FORMULARIO RENTA PERSONAS NATURALES VIGENTE DESDE FEBRERO 2011
+				</descripcion_version>
+				<descripcion_impuesto>RENTA PERSONAS NATURALES
+				</descripcion_impuesto>
+			</version_formulario>
+		</formularioVersion>
+		<formularioVersion codigo="04" nombre="FORMULARIO 104"
+			periodicidad="MENSUAL" versionVigente="04201601"
+			descripcion_impuesto="Impuesto al Valor Agregado">
+			<version_formulario>
+				<codigo_version>04201601</codigo_version>
+				<codigo_impuesto>2011</codigo_impuesto>
+				<descripcion_version>FORMULARIO DE IMPUESTO AL VALOR AGREGADO
+					MENSUAL
+				</descripcion_version>
+				<descripcion_impuesto>IVA MENSUAL</descripcion_impuesto>
+			</version_formulario>
+		</formularioVersion>
+		<formularioVersion codigo="04" nombre="FORMULARIO 104A"
+			periodicidad="SEMESTRAL" versionVigente="04201602"
+			descripcion_impuesto="Impuesto al Valor Agregado">
+			<version_formulario>
+				<codigo_version>04201602</codigo_version>
+				<codigo_impuesto>2011</codigo_impuesto>
+				<descripcion_version>FORMULARIO DE IMPUESTO AL VALOR AGREGADO
+					SEMESTRAL
+				</descripcion_version>
+				<descripcion_impuesto>IVA SEMESTRAL</descripcion_impuesto>
+			</version_formulario>
+		</formularioVersion>
+		<formularioVersion codigo="04" nombre="FORMULARIO 104A"
+			periodicidad="MENSUAL" versionVigente="04201603"
+			descripcion_impuesto="Impuesto al Valor Agregado">
+			<version_formulario>
+				<codigo_version>04201603</codigo_version>
+				<codigo_impuesto>2011</codigo_impuesto>
+				<descripcion_version>FORMULARIO DE IMPUESTO AL VALOR AGREGADO
+					MENSUAL
+				</descripcion_version>
+				<descripcion_impuesto>IVA MENSUAL</descripcion_impuesto>
+			</version_formulario>
+		</formularioVersion>
+		<formularioVersion codigo="08" nombre="FORMULARIO 108"
+			periodicidad="MENSUAL" versionVigente="08200201"
+			descripcion_impuesto=" I.R. sobre ingresos de herencias, legados y donaciones">
+			<version_formulario>
+				<codigo_version>08200201</codigo_version>
+				<codigo_impuesto>1088</codigo_impuesto>
+				<descripcion_version>IMPUESTO A LA RENTA SOBRE INGRESOS PROVENIENTES
+					DE HERENCIAS
+				</descripcion_version>
+				<descripcion_impuesto>IMPUESTO A LA RENTA SOBRE INGRESOS DE
+					HERENCIAS LEGADOS Y DONACIONES
+				</descripcion_impuesto>
+			</version_formulario>
+		</formularioVersion>
+	</datosFormulariosVersiones>
+	<datos_mes codigo="20">
+		<mes>
+			<codigo>1</codigo>
+			<nombre>ENERO</nombre>
+		</mes>
+		<mes>
+			<codigo>2</codigo>
+			<nombre>FEBRERO</nombre>
+		</mes>
+		<mes>
+			<codigo>3</codigo>
+			<nombre>MARZO</nombre>
+		</mes>
+		<mes>
+			<codigo>4</codigo>
+			<nombre>ABRIL</nombre>
+		</mes>
+		<mes>
+			<codigo>5</codigo>
+			<nombre>MAYO</nombre>
+		</mes>
+		<mes>
+			<codigo>6</codigo>
+			<nombre>JUNIO</nombre>
+		</mes>
+		<mes>
+			<codigo>7</codigo>
+			<nombre>JULIO</nombre>
+		</mes>
+		<mes>
+			<codigo>8</codigo>
+			<nombre>AGOSTO</nombre>
+		</mes>
+		<mes>
+			<codigo>9</codigo>
+			<nombre>SEPTIEMBRE</nombre>
+		</mes>
+		<mes>
+			<codigo>10</codigo>
+			<nombre>OCTUBRE</nombre>
+		</mes>
+		<mes>
+			<codigo>11</codigo>
+			<nombre>NOVIEMBRE</nombre>
+		</mes>
+		<mes>
+			<codigo>12</codigo>
+			<nombre>DICIEMBRE</nombre>
+		</mes>
+	</datos_mes>
+	<datos_anio codigo="30">
+		<anio>
+            <codigo>2016</codigo>
+            <nombre>2016</nombre>
+        </anio>
+		<anio>
+            <codigo>2015</codigo>
+            <nombre>2015</nombre>
+        </anio>
+        <anio>
+            <codigo>2014</codigo>
+            <nombre>2014</nombre>
+        </anio>
+		<anio>
+			<codigo>2013</codigo>
+			<nombre>2013</nombre>
+		</anio>
+		<anio>
+			<codigo>2012</codigo>
+			<nombre>2012</nombre>
+		</anio>
+		<anio>
+			<codigo>2011</codigo>
+			<nombre>2011</nombre>
+		</anio>
+		<anio>
+			<codigo>2010</codigo>
+			<nombre>2010</nombre>
+		</anio>
+		<anio>
+			<codigo>2009</codigo>
+			<nombre>2009</nombre>
+		</anio>
+		<anio>
+			<codigo>2008</codigo>
+			<nombre>2008</nombre>
+		</anio>
+		<anio>
+			<codigo>2007</codigo>
+			<nombre>2007</nombre>
+		</anio>
+		<anio>
+			<codigo>2006</codigo>
+			<nombre>2006</nombre>
+		</anio>
+		<anio>
+			<codigo>2005</codigo>
+			<nombre>2005</nombre>
+		</anio>
+		<anio>
+			<codigo>2004</codigo>
+			<nombre>2004</nombre>
+		</anio>
+		<anio>
+			<codigo>2003</codigo>
+			<nombre>2003</nombre>
+		</anio>
+		<anio>
+			<codigo>2002</codigo>
+			<nombre>2002</nombre>
+		</anio>
+		<anio>
+			<codigo>2001</codigo>
+			<nombre>2001</nombre>
+		</anio>
+		<anio>
+			<codigo>2000</codigo>
+			<nombre>2000</nombre>
+		</anio>
+		<anio>
+			<codigo>1999</codigo>
+			<nombre>1999</nombre>
+		</anio>
+	</datos_anio>
+	<datos_semestre codigo="40">
+		<semestre>
+			<codigo>06</codigo>
+			<nombre>ENE-JUN</nombre>
+		</semestre>
+		<semestre>
+			<codigo>12</codigo>
+			<nombre>JUL-DIC</nombre>
+		</semestre>
+	</datos_semestre>
+	<datos_ori_sus codigo="50">
+		<ori_sus>
+			<codigo>1</codigo>
+			<nombre>ORIGINAL</nombre>
+		</ori_sus>
+		<ori_sus>
+			<codigo>2</codigo>
+			<nombre>SUSTITUTIVA</nombre>
+		</ori_sus>
+	</datos_ori_sus>
+	<datos_forma_pago codigo="55">
+		<!-- (2012-11-16) NINGUNA FORMA DE PAGO, primero seleccionado por defecto -->
+		<forma_pago>
+			<codigo>0</codigo>
+			<nombre></nombre>
+		</forma_pago>
+		<forma_pago>
+			<codigo>1</codigo>
+			<nombre>Convenio De Debito</nombre>
+		</forma_pago>
+		<forma_pago>
+			<codigo>2</codigo>
+			<nombre>Otras Formas de Pago</nombre>
+		</forma_pago>
+		<!--+MP 01/mar/2006 -->
+		<forma_pago>
+			<codigo>3</codigo>
+			<nombre>Declaración Sin Valor a Pagar</nombre>
+		</forma_pago>
+		<!--+MP 01/mar/2006 -->
+	</datos_forma_pago>
+	<datos_bancos codigo="60">
+		<!-- (2012-11-16) NINGUN BANCO, primero seleccionado por defecto -->		
+		<banco><codigo>95</codigo><nombre>ASOCIACION MUTUALISTA AMBATO</nombre></banco>
+		<banco><codigo>82</codigo><nombre>ASOCIACION MUTUALISTA PICHINCHA PARA LA VIVIENDA</nombre></banco>
+		<banco><codigo>34</codigo><nombre>BANCO AMAZONAS S.A.</nombre></banco>
+		<banco><codigo>37</codigo><nombre>BANCO BOLIVARIANO C.A.</nombre></banco>
+		<banco><codigo>54</codigo><nombre>BANCO CAPITAL SOCIEDAD ANONIMA</nombre></banco>
+		<banco><codigo>01</codigo><nombre>BANCO CENTRAL DEL ECUADOR</nombre></banco>
+		<banco><codigo>73</codigo><nombre>BANCO COFIEC C.A.</nombre></banco>
+		<banco><codigo>71</codigo><nombre>BANCO COMERCIAL DE MANABI C.A.</nombre></banco>
+		<banco><codigo>43</codigo><nombre>BANCO COOPNACIONAL S.A.</nombre></banco>
+		<banco><codigo>17</codigo><nombre>BANCO DE GUAYAQUIL S.A.</nombre></banco>
+		<banco><codigo>36</codigo><nombre>BANCO DE LA PRODUCCION S.A. PRODUBANCO</nombre></banco>
+		<banco><codigo>29</codigo><nombre>BANCO DE LOJA S.A.</nombre></banco>
+		<banco><codigo>25</codigo><nombre>BANCO DE MACHALA S.A.</nombre></banco>
+		<banco><codigo>35</codigo><nombre>BANCO DEL AUSTRO S.A.</nombre></banco>
+		<banco><codigo>26</codigo><nombre>BANCO DEL LITORAL S.A.</nombre></banco>
+		<banco><codigo>30</codigo><nombre>BANCO DEL PACIFICO S.A.</nombre></banco>
+		<banco><codigo>53</codigo><nombre>BANCO DELBANK S.A.</nombre></banco>
+		<banco><codigo>94</codigo><nombre>BANCO DESARROLLO DE LOS PUEBLOS S.A.</nombre></banco>
+		<banco><codigo>42</codigo><nombre>BANCO GENERAL RUMIÑAHUI S.A.</nombre></banco>
+		<banco><codigo>32</codigo><nombre>BANCO INTERNACIONAL S.A.</nombre></banco>
+		<banco><codigo>02</codigo><nombre>BANCO NACIONAL DE FOMENTO</nombre></banco>
+		<banco><codigo>56</codigo><nombre>BANCO PARA LA ASISTENCIA COMUNITARIA FINCA S.A.</nombre></banco>
+		<banco><codigo>10</codigo><nombre>BANCO PICHINCHA C.A.</nombre></banco>
+		<banco><codigo>52</codigo><nombre>BANCO PROCREDIT S.A.</nombre></banco>
+		<banco><codigo>04</codigo><nombre>BANCO SOLIDARIO S.A.</nombre></banco>
+		<banco><codigo>55</codigo><nombre>BANCO-D-MIRO S.A.</nombre></banco>
+		<banco><codigo>24</codigo><nombre>CITIBANK N.A.</nombre></banco>
+		<banco><codigo>224</codigo><nombre>COOP. DE AHORRO Y CREDITO DE LA PEQUEÑA Y MEDIANA EMPRESA COOPYMEC-MACARA</nombre></banco>
+		<banco><codigo>241</codigo><nombre>COOP. DE AHORRO Y CREDITO FUERZA ENTRE NOSOTROS PARA IMPULSAR EL EXITO FENIX</nombre></banco>
+		<banco><codigo>131</codigo><nombre>COOP. AHORRO Y CREDITO DE LOS SERVIDORES PUBLICOS DEL MIN DE EDUCACION Y CULTURA</nombre></banco>
+		<banco><codigo>178</codigo><nombre>COOP. AHORRO Y CREDITO DEL SINDICATO DE CHOFERES PROFESIONALES DEL AZUAY LTDA.</nombre></banco>
+		<banco><codigo>284</codigo><nombre>COOP. DE AHORRO Y CREDITO PRODUCCION AHORRO INVERSION SERVICIO P.A.I.S. LTDA</nombre></banco>
+		<banco><codigo>346</codigo><nombre>COOPERATIVA  A. Y C. CARROCEROS DE TUNGURAHUA</nombre></banco>
+		<banco><codigo>361</codigo><nombre>COOPERATIVA  AHO.Y CRED.NUEVOS HORIZONTES EL ORO LTDA.</nombre></banco>
+		<banco><codigo>348</codigo><nombre>COOPERATIVA  DE AHORRO Y CREDITO "SIMIATUG LTDA"</nombre></banco>
+		<banco><codigo>355</codigo><nombre>COOPERATIVA  DE AHORRO Y CREDITO CREDIAMIGO LTDA. LOJA (MIES)</nombre></banco>
+		<banco><codigo>333</codigo><nombre>COOPERATIVA  DE AHORRO Y CREDITO HUAICANA LTDA</nombre></banco>
+		<banco><codigo>340</codigo><nombre>COOPERATIVA  DE AHORRO Y CREDITO HUAQUILLAS LTDA.</nombre></banco>
+		<banco><codigo>332</codigo><nombre>COOPERATIVA  DE AHORRO Y CREDITO PILAHUIN TIO LTDA</nombre></banco>
+		<banco><codigo>352</codigo><nombre>COOPERATIVA  DE AHORRO Y CREDITO SAN MIGUEL DE SIGCHOS</nombre></banco>
+		<banco><codigo>345</codigo><nombre>COOPERATIVA  ESFUERZO UNIDO PARA EL DESARR. DEL CHILCO LA ESPERANZA</nombre></banco>
+		<banco><codigo>185</codigo><nombre>COOPERATIVA AHORRO Y CREDITO 26 DE SEPTIEMBRE LAZARO CONDO</nombre></banco>
+		<banco><codigo>186</codigo><nombre>COOPERATIVA AHORRO Y CREDITO AFRO ECUATORIANA DE LA PEQUEÑA EMPRESA LTDA CACAEPE</nombre></banco>
+		<banco><codigo>111</codigo><nombre>COOPERATIVA AHORRO Y CREDITO DE LA PEQUEÑA EMPRESA CACPE LOJA LTDA.</nombre></banco>
+		<banco><codigo>187</codigo><nombre>COOPERATIVA AHORRO Y CREDITO UNION EL EJIDO</nombre></banco>
+		<banco><codigo>142</codigo><nombre>COOPERATIVA DE AHORRO CREDITO ERCO LTDA.</nombre></banco>
+		<banco><codigo>362</codigo><nombre>COOPERATIVA DE AHORRO Y CREDITO  16 DE JUNIO</nombre></banco>
+		<banco><codigo>337</codigo><nombre>COOPERATIVA DE AHORRO Y CREDITO  CASAG LTDA</nombre></banco>
+		<banco><codigo>334</codigo><nombre>COOPERATIVA DE AHORRO Y CREDITO  CREDISUR LTDA.</nombre></banco>
+		<banco><codigo>360</codigo><nombre>COOPERATIVA DE AHORRO Y CREDITO  DE LA PEQ. EMPRESA CACPE MACARÁ</nombre></banco>
+		<banco><codigo>341</codigo><nombre>COOPERATIVA DE AHORRO Y CREDITO  DEL COL. FISC. EXPER. VICENTE ROCAFUERTE</nombre></banco>
+		<banco><codigo>342</codigo><nombre>COOPERATIVA DE AHORRO Y CREDITO  ECUAFUTURO LTDA.</nombre></banco>
+		<banco><codigo>366</codigo><nombre>COOPERATIVA DE AHORRO Y CREDITO  EDUCADORES TULCAN LTDA.</nombre></banco>
+		<banco><codigo>350</codigo><nombre>COOPERATIVA DE AHORRO Y CREDITO  ESCENCIA INDIGENA LTDA.</nombre></banco>
+		<banco><codigo>339</codigo><nombre>COOPERATIVA DE AHORRO Y CREDITO  FINANCIERA INDIGENA LTDA.</nombre></banco>
+		<banco><codigo>338</codigo><nombre>COOPERATIVA DE AHORRO Y CREDITO  FOCLA</nombre></banco>
+		<banco><codigo>363</codigo><nombre>COOPERATIVA DE AHORRO Y CREDITO  FUTURO Y PROGRESO DE GALAPAGOS LTDA.</nombre></banco>
+		<banco><codigo>336</codigo><nombre>COOPERATIVA DE AHORRO Y CREDITO  GENERAL RUMIÑAHUI</nombre></banco>
+		<banco><codigo>365</codigo><nombre>COOPERATIVA DE AHORRO Y CREDITO  GUAMOTE LTDA.</nombre></banco>
+		<banco><codigo>347</codigo><nombre>COOPERATIVA DE AHORRO Y CREDITO  INKA KIPU LTDA.</nombre></banco>
+		<banco><codigo>364</codigo><nombre>COOPERATIVA DE AHORRO Y CREDITO  LUCHA CAMPESINA LTDA.</nombre></banco>
+		<banco><codigo>343</codigo><nombre>COOPERATIVA DE AHORRO Y CREDITO  MAQUITA CUSHUN LTDA.</nombre></banco>
+		<banco><codigo>335</codigo><nombre>COOPERATIVA DE AHORRO Y CREDITO  MAQUITA CUSHUNCHIC LTDA.</nombre></banco>
+		<banco><codigo>349</codigo><nombre>COOPERATIVA DE AHORRO Y CREDITO  PIJAL</nombre></banco>
+		<banco><codigo>357</codigo><nombre>COOPERATIVA DE AHORRO Y CREDITO  PROFESIONALES DEL VOLANTE UNION LTDA (MIES)</nombre></banco>
+		<banco><codigo>351</codigo><nombre>COOPERATIVA DE AHORRO Y CREDITO  SANTA ROSA DE PATUTAN LTDA.</nombre></banco>
+		<banco><codigo>353</codigo><nombre>COOPERATIVA DE AHORRO Y CREDITO  SIERRA CENTRO LTDA.</nombre></banco>
+		<banco><codigo>354</codigo><nombre>COOPERATIVA DE AHORRO Y CREDITO  UNION MERCEDARIA LTDA.</nombre></banco>
+		<banco><codigo>344</codigo><nombre>COOPERATIVA DE AHORRO Y CREDITO  VALLES DEL LIRIO</nombre></banco>
+		<banco><codigo>188</codigo><nombre>COOPERATIVA DE AHORRO Y CREDITO 13 DE ABRIL</nombre></banco>
+		<banco><codigo>375</codigo><nombre>COOPERATIVA DE AHORRO Y CREDITO 15 DE ABRIL LTDA.</nombre></banco>
+		<banco><codigo>160</codigo><nombre>COOPERATIVA DE AHORRO Y CREDITO 15 DE AGOSTO DE PILACOTO</nombre></banco>
+		<banco><codigo>189</codigo><nombre>COOPERATIVA DE AHORRO Y CREDITO 15 DE DICIEMBRE LINDERO LTDA</nombre></banco>
+		<banco><codigo>190</codigo><nombre>COOPERATIVA DE AHORRO Y CREDITO 15 DE MAYO LTDA</nombre></banco>
+		<banco><codigo>191</codigo><nombre>COOPERATIVA DE AHORRO Y CREDITO 20 DE FEBRERO LTDA.</nombre></banco>
+		<banco><codigo>192</codigo><nombre>COOPERATIVA DE AHORRO Y CREDITO 21 DE NOVIEMBRE LTDA.</nombre></banco>
+		<banco><codigo>193</codigo><nombre>COOPERATIVA DE AHORRO Y CREDITO 22 DE JUNIO</nombre></banco>
+		<banco><codigo>194</codigo><nombre>COOPERATIVA DE AHORRO Y CREDITO 23 DE ENERO</nombre></banco>
+		<banco><codigo>28</codigo><nombre>COOPERATIVA DE AHORRO Y CREDITO 23 DE JULIO LTDA.</nombre></banco>
+		<banco><codigo>330</codigo><nombre>COOPERATIVA DE AHORRO Y CREDITO 23 DE MAYO LTDA.</nombre></banco>
+		<banco><codigo>195</codigo><nombre>COOPERATIVA DE AHORRO Y CREDITO 27 DE ABRIL</nombre></banco>
+		<banco><codigo>75</codigo><nombre>COOPERATIVA DE AHORRO Y CREDITO 29 DE OCTUBRE LTDA.</nombre></banco>
+		<banco><codigo>322</codigo><nombre>COOPERATIVA DE AHORRO Y CREDITO 4 DE OCTUBRE</nombre></banco>
+		<banco><codigo>196</codigo><nombre>COOPERATIVA DE AHORRO Y CREDITO 4 DE OCTUBRE SAN FRANCISCO DE CHAMBO</nombre></banco>
+		<banco><codigo>100</codigo><nombre>COOPERATIVA DE AHORRO Y CREDITO 8 DE SEPTIEMBRE LTDA.</nombre></banco>
+		<banco><codigo>109</codigo><nombre>COOPERATIVA DE AHORRO Y CREDITO 9 DE OCTUBRE</nombre></banco>
+		<banco><codigo>197</codigo><nombre>COOPERATIVA DE AHORRO Y CREDITO ABDON CALDERON LTDA.</nombre></banco>
+		<banco><codigo>318</codigo><nombre>COOPERATIVA DE AHORRO Y CREDITO ACCION RURAL LTDA</nombre></banco>
+		<banco><codigo>198</codigo><nombre>COOPERATIVA DE AHORRO Y CREDITO ACCION TUNGURAHUA LTDA.</nombre></banco>
+		<banco><codigo>319</codigo><nombre>COOPERATIVA DE AHORRO Y CREDITO ACCION Y DESARROLLO LTDA</nombre></banco>
+		<banco><codigo>120</codigo><nombre>COOPERATIVA DE AHORRO Y CREDITO AGRARIA MUSHUK KAWSAY LTDA</nombre></banco>
+		<banco><codigo>313</codigo><nombre>COOPERATIVA DE AHORRO Y CREDITO AGRICOLA JUNIN</nombre></banco>
+		<banco><codigo>199</codigo><nombre>COOPERATIVA DE AHORRO Y CREDITO AGRO PRODUCTIVA MANABI LTDA.</nombre></banco>
+		<banco><codigo>200</codigo><nombre>COOPERATIVA DE AHORRO Y CREDITO AGUILAS DE CRISTO</nombre></banco>
+		<banco><codigo>113</codigo><nombre>COOPERATIVA DE AHORRO Y CREDITO ALFONSO JARAMILLO  LEON C.C.C</nombre></banco>
+		<banco><codigo>46</codigo><nombre>COOPERATIVA DE AHORRO Y CREDITO ALIANZA DEL VALLE</nombre></banco>
+		<banco><codigo>123</codigo><nombre>COOPERATIVA DE AHORRO Y CREDITO ALIANZA MINAS LTDA.</nombre></banco>
+		<banco><codigo>201</codigo><nombre>COOPERATIVA DE AHORRO Y CREDITO ALLI TARPUC</nombre></banco>
+		<banco><codigo>119</codigo><nombre>COOPERATIVA DE AHORRO Y CREDITO AMAZONAS LTDA.</nombre></banco>
+		<banco><codigo>145</codigo><nombre>COOPERATIVA DE AHORRO Y CREDITO AMBATO LTDA.</nombre></banco>
+		<banco><codigo>09</codigo><nombre>COOPERATIVA DE AHORRO Y CREDITO ANDALUCIA LTDA.</nombre></banco>
+		<banco><codigo>159</codigo><nombre>COOPERATIVA DE AHORRO Y CREDITO ANDINA LTDA.</nombre></banco>
+		<banco><codigo>49</codigo><nombre>COOPERATIVA DE AHORRO Y CREDITO ARTESANOS LTDA.</nombre></banco>
+		<banco><codigo>31</codigo><nombre>COOPERATIVA DE AHORRO Y CREDITO ATUNTAQUI LTDA.</nombre></banco>
+		<banco><codigo>143</codigo><nombre>COOPERATIVA DE AHORRO Y CREDITO BAÑOS LTDA</nombre></banco>
+		<banco><codigo>202</codigo><nombre>COOPERATIVA DE AHORRO Y CREDITO BASHALAN LTDA</nombre></banco>
+		<banco><codigo>203</codigo><nombre>COOPERATIVA DE AHORRO Y CREDITO BUENA FE LTDA.</nombre></banco>
+		<banco><codigo>204</codigo><nombre>COOPERATIVA DE AHORRO Y CREDITO CACIQUE GURITAVE</nombre></banco>
+		<banco><codigo>358</codigo><nombre>COOPERATIVA DE AHORRO Y CREDITO CACPE CELICA</nombre></banco>
+		<banco><codigo>176</codigo><nombre>COOPERATIVA DE AHORRO Y CREDITO CACPE MANABI</nombre></banco>
+		<banco><codigo>105</codigo><nombre>COOPERATIVA DE AHORRO Y CREDITO CAJA CENTRAL "FINANNCOOP"</nombre></banco>
+		<banco><codigo>106</codigo><nombre>COOPERATIVA DE AHORRO Y CREDITO CALCETA</nombre></banco>
+		<banco><codigo>98</codigo><nombre>COOPERATIVA DE AHORRO Y CREDITO CAMARA DE COMERCIO DE AMBATO LTDA.</nombre></banco>
+		<banco><codigo>205</codigo><nombre>COOPERATIVA DE AHORRO Y CREDITO CAMARA DE COMERCIO DE RIOBAMBA LTDA</nombre></banco>
+		<banco><codigo>206</codigo><nombre>COOPERATIVA DE AHORRO Y CREDITO CAMARA DE COMERCIO DE SANTO DOMINGO</nombre></banco>
+		<banco><codigo>315</codigo><nombre>COOPERATIVA DE AHORRO Y CREDITO CAMARA DE COMERCIO DEL CANTON BOLIVAR LTDA.</nombre></banco>
+		<banco><codigo>207</codigo><nombre>COOPERATIVA DE AHORRO Y CREDITO CAMARA DE COMERCIO DEL CANTON EL CARMEN LTDA.</nombre></banco>
+		<banco><codigo>323</codigo><nombre>COOPERATIVA DE AHORRO Y CREDITO CAMARA DE COMERCIO INDIGENA DE GUAMOTE LTDA</nombre></banco>
+		<banco><codigo>327</codigo><nombre>COOPERATIVA DE AHORRO Y CREDITO CAMARA DE COMERCIO JOYA DE LOS SACHAS LTDA</nombre></banco>
+		<banco><codigo>378</codigo><nombre>COOPERATIVA DE AHORRO Y CREDITO CAMARA DE COMERCIO SANTA ANA LTDA.</nombre></banco>
+		<banco><codigo>208</codigo><nombre>COOPERATIVA DE AHORRO Y CREDITO CAÑAR LTDA.</nombre></banco>
+		<banco><codigo>166</codigo><nombre>COOPERATIVA DE AHORRO Y CREDITO CARIAMANGA LTDA.</nombre></banco>
+		<banco><codigo>359</codigo><nombre>COOPERATIVA DE AHORRO Y CREDITO CATAMAYO LTDA. (MIES)</nombre></banco>
+		<banco><codigo>184</codigo><nombre>COOPERATIVA DE AHORRO Y CREDITO CHIBULEO</nombre></banco>
+		<banco><codigo>209</codigo><nombre>COOPERATIVA DE AHORRO Y CREDITO CHOCO TUNGURAHUA RUNA LTDA.</nombre></banco>
+		<banco><codigo>376</codigo><nombre>COOPERATIVA DE AHORRO Y CREDITO CHONE LTDA.</nombre></banco>
+		<banco><codigo>331</codigo><nombre>COOPERATIVA DE AHORRO Y CREDITO COCA LTDA</nombre></banco>
+		<banco><codigo>210</codigo><nombre>COOPERATIVA DE AHORRO Y CREDITO COLEGIO DE INGENIEROS CIVILES DEL AZUAY C.I.C.A.</nombre></banco>
+		<banco><codigo>377</codigo><nombre>COOPERATIVA DE AHORRO Y CREDITO COMERCIO LTDA.</nombre></banco>
+		<banco><codigo>81</codigo><nombre>COOPERATIVA DE AHORRO Y CREDITO CONSTRUCCION COMERCIO Y PRODUCCION LTDA.</nombre></banco>
+		<banco><codigo>182</codigo><nombre>COOPERATIVA DE AHORRO Y CREDITO COOPAC AUSTRO LTDA</nombre></banco>
+		<banco><codigo>211</codigo><nombre>COOPERATIVA DE AHORRO Y CREDITO COOPARTAMOS LTDA.</nombre></banco>
+		<banco><codigo>212</codigo><nombre>COOPERATIVA DE AHORRO Y CREDITO COOPINDIGENA LTDA.</nombre></banco>
+		<banco><codigo>213</codigo><nombre>COOPERATIVA DE AHORRO Y CREDITO COOPTOPAXI LTDA.</nombre></banco>
+		<banco><codigo>214</codigo><nombre>COOPERATIVA DE AHORRO Y CREDITO CORDILLERA DE LOS ANDES LTDA.</nombre></banco>
+		<banco><codigo>215</codigo><nombre>COOPERATIVA DE AHORRO Y CREDITO CORPORACION CENTRO LTDA.</nombre></banco>
+		<banco><codigo>77</codigo><nombre>COOPERATIVA DE AHORRO Y CREDITO COTOCOLLAO LTDA</nombre></banco>
+		<banco><codigo>216</codigo><nombre>COOPERATIVA DE AHORRO Y CREDITO CREA LTDA.</nombre></banco>
+		<banco><codigo>177</codigo><nombre>COOPERATIVA DE AHORRO Y CREDITO CRECER WIÑARI LTDA.</nombre></banco>
+		<banco><codigo>329</codigo><nombre>COOPERATIVA DE AHORRO Y CREDITO CRECIENDO JUNTOS LTDA.</nombre></banco>
+		<banco><codigo>150</codigo><nombre>COOPERATIVA DE AHORRO Y CREDITO CREDI FACIL LTDA.</nombre></banco>
+		<banco><codigo>217</codigo><nombre>COOPERATIVA DE AHORRO Y CREDITO CREDI UNION LTDA</nombre></banco>
+		<banco><codigo>218</codigo><nombre>COOPERATIVA DE AHORRO Y CREDITO CREDIL LTDA.</nombre></banco>
+		<banco><codigo>164</codigo><nombre>COOPERATIVA DE AHORRO Y CREDITO CRISTO REY</nombre></banco>
+		<banco><codigo>219</codigo><nombre>COOPERATIVA DE AHORRO Y CREDITO CUNA DE LA NACIONALIDAD LTDA.</nombre></banco>
+		<banco><codigo>220</codigo><nombre>COOPERATIVA DE AHORRO Y CREDITO DE LA CAMARA DE COMERCIO DE GONZANAMA</nombre></banco>
+		<banco><codigo>167</codigo><nombre>COOPERATIVA DE AHORRO Y CREDITO DE LA CAMARA DE COMERCIO DE PINDAL CADECOPI</nombre></banco>
+		<banco><codigo>221</codigo><nombre>COOPERATIVA DE AHORRO Y CREDITO DE LA CORPORACION  DE QUISAPINCHA COCIQ</nombre></banco>
+		<banco><codigo>222</codigo><nombre>COOPERATIVA DE AHORRO Y CREDITO DE LA ESCUELA SUP. POLITEC.AGROP. MANABI FELIZ L</nombre></banco>
+		<banco><codigo>223</codigo><nombre>COOPERATIVA DE AHORRO Y CREDITO DE LA MICROEMPRESA DE CHIMBORAZO LTDA</nombre></banco>
+		<banco><codigo>47</codigo><nombre>COOPERATIVA DE AHORRO Y CREDITO DE LA PEQUENA EMPRESA BIBLIAN</nombre></banco>
+		<banco><codigo>125</codigo><nombre>COOPERATIVA DE AHORRO Y CREDITO DE LA PEQUEÑA EMPRESA CACPE YANZATZA LTDA.</nombre></banco>
+		<banco><codigo>104</codigo><nombre>COOPERATIVA DE AHORRO Y CREDITO DE LA PEQUEÑA EMPRESA DE PASTAZA</nombre></banco>
+		<banco><codigo>122</codigo><nombre>COOPERATIVA DE AHORRO Y CREDITO DE LA PEQUEÑA EMPRESA GUALAQUIZA</nombre></banco>
+		<banco><codigo>127</codigo><nombre>COOPERATIVA DE AHORRO Y CREDITO DE LA PEQUEÑA EMPRESA ZAMORA CHINCHIPE</nombre></banco>
+		<banco><codigo>225</codigo><nombre>COOPERATIVA DE AHORRO Y CREDITO DE VIVIENDA Y DESARROLLO CASA FACIL LTDA</nombre></banco>
+		<banco><codigo>226</codigo><nombre>COOPERATIVA DE AHORRO Y CREDITO DEL AZUAY</nombre></banco>
+		<banco><codigo>227</codigo><nombre>COOPERATIVA DE AHORRO Y CREDITO DEL EMIGRANTE ECUATORIANO Y SU FAMILIA LTDA.</nombre></banco>
+		<banco><codigo>128</codigo><nombre>COOPERATIVA DE AHORRO Y CREDITO DESARROLLO INTEGRAL</nombre></banco>
+		<banco><codigo>228</codigo><nombre>COOPERATIVA DE AHORRO Y CREDITO DESARROLLO POPULAR LTDA.</nombre></banco>
+		<banco><codigo>148</codigo><nombre>COOPERATIVA DE AHORRO Y CREDITO DORADO LTDA</nombre></banco>
+		<banco><codigo>229</codigo><nombre>COOPERATIVA DE AHORRO Y CREDITO ECONOMIA DEL SUR ECOSUR</nombre></banco>
+		<banco><codigo>320</codigo><nombre>COOPERATIVA DE AHORRO Y CREDITO EDUCADORES DE CHIMBORAZO</nombre></banco>
+		<banco><codigo>230</codigo><nombre>COOPERATIVA DE AHORRO Y CREDITO EDUCADORES DE EL ORO LTDA</nombre></banco>
+		<banco><codigo>129</codigo><nombre>COOPERATIVA DE AHORRO Y CREDITO EDUCADORES DE PASTAZA LTDA</nombre></banco>
+		<banco><codigo>144</codigo><nombre>COOPERATIVA DE AHORRO Y CREDITO EDUCADORES DE TUNGURAHUA LTDA</nombre></banco>
+		<banco><codigo>231</codigo><nombre>COOPERATIVA DE AHORRO Y CREDITO EDUCADORES DE ZAMORA CHINCHIPE LTDA.</nombre></banco>
+		<banco><codigo>149</codigo><nombre>COOPERATIVA DE AHORRO Y CREDITO EL CALVARIO LTDA.</nombre></banco>
+		<banco><codigo>232</codigo><nombre>COOPERATIVA DE AHORRO Y CREDITO EL COMERCIANTE LTDA.</nombre></banco>
+		<banco><codigo>233</codigo><nombre>COOPERATIVA DE AHORRO Y CREDITO EL DISCAPACITADO</nombre></banco>
+		<banco><codigo>234</codigo><nombre>COOPERATIVA DE AHORRO Y CREDITO EL MIGRANTE SOLIDARIO</nombre></banco>
+		<banco><codigo>07</codigo><nombre>COOPERATIVA DE AHORRO Y CREDITO EL SAGRARIO LTDA.</nombre></banco>
+		<banco><codigo>235</codigo><nombre>COOPERATIVA DE AHORRO Y CREDITO EL TESORO PILLAREÑO</nombre></banco>
+		<banco><codigo>236</codigo><nombre>COOPERATIVA DE AHORRO Y CREDITO EL TRANSPORTISTA CACET</nombre></banco>
+		<banco><codigo>237</codigo><nombre>COOPERATIVA DE AHORRO Y CREDITO EMPLEADOS BANCARIOS DE EL ORO LTDA</nombre></banco>
+		<banco><codigo>179</codigo><nombre>COOPERATIVA DE AHORRO Y CREDITO EMPRENDEDORES "COOPEMPRENDER" LIMITADA</nombre></banco>
+		<banco><codigo>238</codigo><nombre>COOPERATIVA DE AHORRO Y CREDITO ESPERANZA Y PROGRESO DEL VALLE</nombre></banco>
+		<banco><codigo>140</codigo><nombre>COOPERATIVA DE AHORRO Y CREDITO FAMILIA AUSTRAL LTDA.</nombre></banco>
+		<banco><codigo>239</codigo><nombre>COOPERATIVA DE AHORRO Y CREDITO FASAYÑAN LTDA.</nombre></banco>
+		<banco><codigo>324</codigo><nombre>COOPERATIVA DE AHORRO Y CREDITO FERNANDO DAQUILEMA</nombre></banco>
+		<banco><codigo>356</codigo><nombre>COOPERATIVA DE AHORRO Y CREDITO FORTUNA (MIES)</nombre></banco>
+		<banco><codigo>240</codigo><nombre>COOPERATIVA DE AHORRO Y CREDITO FRANDESC LTDA</nombre></banco>
+		<banco><codigo>242</codigo><nombre>COOPERATIVA DE AHORRO Y CREDITO FUNDAR</nombre></banco>
+		<banco><codigo>126</codigo><nombre>COOPERATIVA DE AHORRO Y CREDITO FUTURO Y DESARROLLO FUNDESARROLLO</nombre></banco>
+		<banco><codigo>243</codigo><nombre>COOPERATIVA DE AHORRO Y CREDITO GAÑANSOL LTDA.COOP. GAÑANSOL</nombre></banco>
+		<banco><codigo>244</codigo><nombre>COOPERATIVA DE AHORRO Y CREDITO GENESIS LTDA</nombre></banco>
+		<banco><codigo>310</codigo><nombre>COOPERATIVA DE AHORRO Y CREDITO GONZANAMA</nombre></banco>
+		<banco><codigo>130</codigo><nombre>COOPERATIVA DE AHORRO Y CREDITO GRAMEEN AMAZONAS LTDA.</nombre></banco>
+		<banco><codigo>245</codigo><nombre>COOPERATIVA DE AHORRO Y CREDITO GUACHAPALA</nombre></banco>
+		<banco><codigo>78</codigo><nombre>COOPERATIVA DE AHORRO Y CREDITO GUARANDA LTDA.</nombre></banco>
+		<banco><codigo>246</codigo><nombre>COOPERATIVA DE AHORRO Y CREDITO GUARUMAL DEL CENTRO LTDA.</nombre></banco>
+		<banco><codigo>247</codigo><nombre>COOPERATIVA DE AHORRO Y CREDITO GUEL LTDA.</nombre></banco>
+		<banco><codigo>158</codigo><nombre>COOPERATIVA DE AHORRO Y CREDITO HUAYCO PUNGO</nombre></banco>
+		<banco><codigo>248</codigo><nombre>COOPERATIVA DE AHORRO Y CREDITO HUINARA LTDA.</nombre></banco>
+		<banco><codigo>249</codigo><nombre>COOPERATIVA DE AHORRO Y CREDITO ILINIZA LTDA.</nombre></banco>
+		<banco><codigo>175</codigo><nombre>COOPERATIVA DE AHORRO Y CREDITO INDIGENA ALFA Y OMEGA LTDA</nombre></banco>
+		<banco><codigo>250</codigo><nombre>COOPERATIVA DE AHORRO Y CREDITO INDIGENA SAC PELILEO LTDA.</nombre></banco>
+		<banco><codigo>141</codigo><nombre>COOPERATIVA DE AHORRO Y CREDITO INTEGRAL</nombre></banco>
+		<banco><codigo>251</codigo><nombre>COOPERATIVA DE AHORRO Y CREDITO INTERCULTURAL TARPUK RUNA LTDA.</nombre></banco>
+		<banco><codigo>252</codigo><nombre>COOPERATIVA DE AHORRO Y CREDITO INTERCULTURAL TAWANTINSUYU LTDA.</nombre></banco>
+		<banco><codigo>253</codigo><nombre>COOPERATIVA DE AHORRO Y CREDITO INTI WASI LTDA INTICOOP</nombre></banco>
+		<banco><codigo>76</codigo><nombre>COOPERATIVA DE AHORRO Y CREDITO JARDIN AZUAYO LTDA.</nombre></banco>
+		<banco><codigo>254</codigo><nombre>COOPERATIVA DE AHORRO Y CREDITO JOYOCOTO LTDA</nombre></banco>
+		<banco><codigo>115</codigo><nombre>COOPERATIVA DE AHORRO Y CREDITO JUAN DE SALINAS</nombre></banco>
+		<banco><codigo>154</codigo><nombre>COOPERATIVA DE AHORRO Y CREDITO JUAN PIO DE MORA LTDA.</nombre></banco>
+		<banco><codigo>255</codigo><nombre>COOPERATIVA DE AHORRO Y CREDITO JUVENTUD UNIDA LTDA.</nombre></banco>
+		<banco><codigo>183</codigo><nombre>COOPERATIVA DE AHORRO Y CREDITO KISAPINCHA LTDA.</nombre></banco>
+		<banco><codigo>256</codigo><nombre>COOPERATIVA DE AHORRO Y CREDITO KURI WASI LTDA</nombre></banco>
+		<banco><codigo>257</codigo><nombre>COOPERATIVA DE AHORRO Y CREDITO KURIÑAN</nombre></banco>
+		<banco><codigo>91</codigo><nombre>COOPERATIVA DE AHORRO Y CREDITO LA BENEFICA LTDA.</nombre></banco>
+		<banco><codigo>96</codigo><nombre>COOPERATIVA DE AHORRO Y CREDITO LA DOLOROSA LTDA.</nombre></banco>
+		<banco><codigo>259</codigo><nombre>COOPERATIVA DE AHORRO Y CREDITO LA FLORESTA LTDA</nombre></banco>
+		<banco><codigo>260</codigo><nombre>COOPERATIVA DE AHORRO Y CREDITO LA FLORIDA</nombre></banco>
+		<banco><codigo>261</codigo><nombre>COOPERATIVA DE AHORRO Y CREDITO LA INMACULADA DE SAN PLACIDO LTDA.</nombre></banco>
+		<banco><codigo>262</codigo><nombre>COOPERATIVA DE AHORRO Y CREDITO LA LIBERTAD LTDA</nombre></banco>
+		<banco><codigo>135</codigo><nombre>COOPERATIVA DE AHORRO Y CREDITO LA MERCED LTDA.</nombre></banco>
+		<banco><codigo>117</codigo><nombre>COOPERATIVA DE AHORRO Y CREDITO LA NUEVA JERUSALEN</nombre></banco>
+		<banco><codigo>263</codigo><nombre>COOPERATIVA DE AHORRO Y CREDITO LA UNION LTDA</nombre></banco>
+		<banco><codigo>264</codigo><nombre>COOPERATIVA DE AHORRO Y CREDITO LAS LAGUNAS</nombre></banco>
+		<banco><codigo>147</codigo><nombre>COOPERATIVA DE AHORRO Y CREDITO LLANGANATES</nombre></banco>
+		<banco><codigo>265</codigo><nombre>COOPERATIVA DE AHORRO Y CREDITO LOS ANDES LATINOS LTDA.</nombre></banco>
+		<banco><codigo>266</codigo><nombre>COOPERATIVA DE AHORRO Y CREDITO LOS CHASQUIS PASTOCALLE LTDA.</nombre></banco>
+		<banco><codigo>152</codigo><nombre>COOPERATIVA DE AHORRO Y CREDITO LOS RIOS</nombre></banco>
+		<banco><codigo>267</codigo><nombre>COOPERATIVA DE AHORRO Y CREDITO LUZ DEL VALLE</nombre></banco>
+		<banco><codigo>268</codigo><nombre>COOPERATIVA DE AHORRO Y CREDITO MACODES LTDA</nombre></banco>
+		<banco><codigo>118</codigo><nombre>COOPERATIVA DE AHORRO Y CREDITO MALCHINGUI LTDA.</nombre></banco>
+		<banco><codigo>114</codigo><nombre>COOPERATIVA DE AHORRO Y CREDITO MANANTIAL DE ORO LTDA.</nombre></banco>
+		<banco><codigo>312</codigo><nombre>COOPERATIVA DE AHORRO Y CREDITO MARCABELI LTDA</nombre></banco>
+		<banco><codigo>269</codigo><nombre>COOPERATIVA DE AHORRO Y CREDITO MARIA AUXILIADORA DE QUIROGA LTDA.</nombre></banco>
+		<banco><codigo>380</codigo><nombre>COOPERATIVA DE AHORRO Y CREDITO METROPOLITANA</nombre></banco>
+		<banco><codigo>124</codigo><nombre>COOPERATIVA DE AHORRO Y CREDITO MI TIERRA</nombre></banco>
+		<banco><codigo>270</codigo><nombre>COOPERATIVA DE AHORRO Y CREDITO MICROEMPRESARIAL SUCRE</nombre></banco>
+		<banco><codigo>271</codigo><nombre>COOPERATIVA DE AHORRO Y CREDITO MIGRANTES Y EMPRENDEDORES LTDA</nombre></banco>
+		<banco><codigo>321</codigo><nombre>COOPERATIVA DE AHORRO Y CREDITO MINGA LTDA</nombre></banco>
+		<banco><codigo>156</codigo><nombre>COOPERATIVA DE AHORRO Y CREDITO MUJERES UNIDAS</nombre></banco>
+		<banco><codigo>272</codigo><nombre>COOPERATIVA DE AHORRO Y CREDITO MULTICULTURAL BANCO INDIGENA LTDA.</nombre></banco>
+		<banco><codigo>51</codigo><nombre>COOPERATIVA DE AHORRO Y CREDITO MUSHUC RUNA</nombre></banco>
+		<banco><codigo>273</codigo><nombre>COOPERATIVA DE AHORRO Y CREDITO MUSHUG CAUSAY LTDA</nombre></banco>
+		<banco><codigo>274</codigo><nombre>COOPERATIVA DE AHORRO Y CREDITO MUSHUK PAKARI LTDA</nombre></banco>
+		<banco><codigo>275</codigo><nombre>COOPERATIVA DE AHORRO Y CREDITO MUSHUK PAKARIK LTDA.</nombre></banco>
+		<banco><codigo>276</codigo><nombre>COOPERATIVA DE AHORRO Y CREDITO MUSHUK YUYAY</nombre></banco>
+		<banco><codigo>277</codigo><nombre>COOPERATIVA DE AHORRO Y CREDITO MUSHUKWASI</nombre></banco>
+		<banco><codigo>153</codigo><nombre>COOPERATIVA DE AHORRO Y CREDITO NUESTROS ABUELOS LTDA</nombre></banco>
+		<banco><codigo>316</codigo><nombre>COOPERATIVA DE AHORRO Y CREDITO NUEVA ESPERANZA LTDA</nombre></banco>
+		<banco><codigo>278</codigo><nombre>COOPERATIVA DE AHORRO Y CREDITO NUEVA FUERZA ALIANZA LTDA</nombre></banco>
+		<banco><codigo>134</codigo><nombre>COOPERATIVA DE AHORRO Y CREDITO NUEVA HUANCAVILCA</nombre></banco>
+		<banco><codigo>180</codigo><nombre>COOPERATIVA DE AHORRO Y CREDITO NUEVA LOJA LTDA.</nombre></banco>
+		<banco><codigo>279</codigo><nombre>COOPERATIVA DE AHORRO Y CREDITO ÑUKA LLAKTA LTDA</nombre></banco>
+		<banco><codigo>280</codigo><nombre>COOPERATIVA DE AHORRO Y CREDITO OCIPSA</nombre></banco>
+		<banco><codigo>281</codigo><nombre>COOPERATIVA DE AHORRO Y CREDITO OLMEDO LTDA.</nombre></banco>
+		<banco><codigo>374</codigo><nombre>COOPERATIVA DE AHORRO Y CREDITO ONCE DE JUNIO LTDA.</nombre></banco>
+		<banco><codigo>83</codigo><nombre>COOPERATIVA DE AHORRO Y CREDITO OSCUS LTDA.</nombre></banco>
+		<banco><codigo>06</codigo><nombre>COOPERATIVA DE AHORRO Y CREDITO PABLO MUÑOZ VEGA LTDA.</nombre></banco>
+		<banco><codigo>103</codigo><nombre>COOPERATIVA DE AHORRO Y CREDITO PAD LTDA. COOPAD</nombre></banco>
+		<banco><codigo>18</codigo><nombre>COOPERATIVA DE AHORRO Y CREDITO PADRE JULIAN LORENT</nombre></banco>
+		<banco><codigo>282</codigo><nombre>COOPERATIVA DE AHORRO Y CREDITO PADRE VICENTE PONCE RUBIO</nombre></banco>
+		<banco><codigo>132</codigo><nombre>COOPERATIVA DE AHORRO Y CREDITO PEDRO MONCAYO LTDA.</nombre></banco>
+		<banco><codigo>40</codigo><nombre>COOPERATIVA DE AHORRO Y CREDITO PEQUEÑA EMPRESA DE COTOPAXI CACPECO</nombre></banco>
+		<banco><codigo>161</codigo><nombre>COOPERATIVA DE AHORRO Y CREDITO PILAHUIN</nombre></banco>
+		<banco><codigo>48</codigo><nombre>COOPERATIVA DE AHORRO Y CREDITO POLICIA NACIONAL LTDA.</nombre></banco>
+		<banco><codigo>283</codigo><nombre>COOPERATIVA DE AHORRO Y CREDITO POPULAR Y SOLIDARIA</nombre></banco>
+		<banco><codigo>138</codigo><nombre>COOPERATIVA DE AHORRO Y CREDITO PRIMERO DE ENERO DEL AUSTRO</nombre></banco>
+		<banco><codigo>285</codigo><nombre>COOPERATIVA DE AHORRO Y CREDITO PRODUCCION Y DESARROLLO AGRICOLA COOPRODESA LTDA</nombre></banco>
+		<banco><codigo>286</codigo><nombre>COOPERATIVA DE AHORRO Y CREDITO PROFUTURO LTDA</nombre></banco>
+		<banco><codigo>44</codigo><nombre>COOPERATIVA DE AHORRO Y CREDITO PROGRESO LTDA.</nombre></banco>
+		<banco><codigo>136</codigo><nombre>COOPERATIVA DE AHORRO Y CREDITO PROMOCION DE VIDA ASOCIADA LTDA.</nombre></banco>
+		<banco><codigo>92</codigo><nombre>COOPERATIVA DE AHORRO Y CREDITO PUCARA LTDA.</nombre></banco>
+		<banco><codigo>116</codigo><nombre>COOPERATIVA DE AHORRO Y CREDITO PUELLARO LTDA.</nombre></banco>
+		<banco><codigo>328</codigo><nombre>COOPERATIVA DE AHORRO Y CREDITO PUERTO FRANCISCO DE ORELLANA</nombre></banco>
+		<banco><codigo>314</codigo><nombre>COOPERATIVA DE AHORRO Y CREDITO PUERTO LOPEZ LTDA.</nombre></banco>
+		<banco><codigo>287</codigo><nombre>COOPERATIVA DE AHORRO Y CREDITO PUJILI LTDA.</nombre></banco>
+		<banco><codigo>311</codigo><nombre>COOPERATIVA DE AHORRO Y CREDITO QUILANGA LTDA.</nombre></banco>
+		<banco><codigo>97</codigo><nombre>COOPERATIVA DE AHORRO Y CREDITO RIOBAMBA LTDA.</nombre></banco>
+		<banco><codigo>288</codigo><nombre>COOPERATIVA DE AHORRO Y CREDITO RIOCHICO</nombre></banco>
+		<banco><codigo>289</codigo><nombre>COOPERATIVA DE AHORRO Y CREDITO SALASACA</nombre></banco>
+		<banco><codigo>290</codigo><nombre>COOPERATIVA DE AHORRO Y CREDITO SALATE LTDA.</nombre></banco>
+		<banco><codigo>291</codigo><nombre>COOPERATIVA DE AHORRO Y CREDITO SALINAS LIMITADA</nombre></banco>
+		<banco><codigo>292</codigo><nombre>COOPERATIVA DE AHORRO Y CREDITO SAN ANTONIO DE TOACASO</nombre></banco>
+		<banco><codigo>293</codigo><nombre>COOPERATIVA DE AHORRO Y CREDITO SAN ANTONIO LTDA.</nombre></banco>
+		<banco><codigo>157</codigo><nombre>COOPERATIVA DE AHORRO Y CREDITO SAN ANTONIO LTDA. IMBABURA</nombre></banco>
+		<banco><codigo>294</codigo><nombre>COOPERATIVA DE AHORRO Y CREDITO SAN BARTOLO LTDA.</nombre></banco>
+		<banco><codigo>295</codigo><nombre>COOPERATIVA DE AHORRO Y CREDITO SAN BARTOLOME LTDA.</nombre></banco>
+		<banco><codigo>296</codigo><nombre>COOPERATIVA DE AHORRO Y CREDITO SAN FERNANDO LIMITADA</nombre></banco>
+		<banco><codigo>99</codigo><nombre>COOPERATIVA DE AHORRO Y CREDITO SAN FRANCISCO DE ASIS</nombre></banco>
+		<banco><codigo>80</codigo><nombre>COOPERATIVA DE AHORRO Y CREDITO SAN FRANCISCO LTDA.</nombre></banco>
+		<banco><codigo>326</codigo><nombre>COOPERATIVA DE AHORRO Y CREDITO SAN GABRIEL LTDA.</nombre></banco>
+		<banco><codigo>297</codigo><nombre>COOPERATIVA DE AHORRO Y CREDITO SAN ISIDRO LTDA.</nombre></banco>
+		<banco><codigo>317</codigo><nombre>COOPERATIVA DE AHORRO Y CREDITO SAN JORGE LTDA</nombre></banco>
+		<banco><codigo>298</codigo><nombre>COOPERATIVA DE AHORRO Y CREDITO SAN JOSE - AIRO</nombre></banco>
+		<banco><codigo>21</codigo><nombre>COOPERATIVA DE AHORRO Y CREDITO SAN JOSE LIMITADA</nombre></banco>
+		<banco><codigo>137</codigo><nombre>COOPERATIVA DE AHORRO Y CREDITO SAN JOSE S.J.</nombre></banco>
+		<banco><codigo>181</codigo><nombre>COOPERATIVA DE AHORRO Y CREDITO SAN JUAN DE COTOGCHOA</nombre></banco>
+		<banco><codigo>299</codigo><nombre>COOPERATIVA DE AHORRO Y CREDITO SAN MARCOS</nombre></banco>
+		<banco><codigo>300</codigo><nombre>COOPERATIVA DE AHORRO Y CREDITO SAN MARTIN DE TISALEO LTDA</nombre></banco>
+		<banco><codigo>133</codigo><nombre>COOPERATIVA DE AHORRO Y CREDITO SAN MIGUEL DE LOS BANCOS LTDA.</nombre></banco>
+		<banco><codigo>301</codigo><nombre>COOPERATIVA DE AHORRO Y CREDITO SAN MIGUEL DE PALLATANGA</nombre></banco>
+		<banco><codigo>302</codigo><nombre>COOPERATIVA DE AHORRO Y CREDITO SAN PEDRO DE PELILEO LTDA.</nombre></banco>
+		<banco><codigo>110</codigo><nombre>COOPERATIVA DE AHORRO Y CREDITO SAN PEDRO DE TABOADA LTDA.</nombre></banco>
+		<banco><codigo>303</codigo><nombre>COOPERATIVA DE AHORRO Y CREDITO SAN PEDRO LTDA.</nombre></banco>
+		<banco><codigo>304</codigo><nombre>COOPERATIVA DE AHORRO Y CREDITO SAN SANTIAGO DE MOLLETURO</nombre></banco>
+		<banco><codigo>305</codigo><nombre>COOPERATIVA DE AHORRO Y CREDITO SAN SEBASTIAN - LOJA</nombre></banco>
+		<banco><codigo>155</codigo><nombre>COOPERATIVA DE AHORRO Y CREDITO SANTA ANITA LTDA.</nombre></banco>
+		<banco><codigo>306</codigo><nombre>COOPERATIVA DE AHORRO Y CREDITO SANTA ISABEL LTDA</nombre></banco>
+		<banco><codigo>84</codigo><nombre>COOPERATIVA DE AHORRO Y CREDITO SANTA ROSA LTDA.</nombre></banco>
+		<banco><codigo>307</codigo><nombre>COOPERATIVA DE AHORRO Y CREDITO SARAGUROS</nombre></banco>
+		<banco><codigo>165</codigo><nombre>COOPERATIVA DE AHORRO Y CREDITO SEMILLA DEL PROGRESO LTDA.</nombre></banco>
+		<banco><codigo>139</codigo><nombre>COOPERATIVA DE AHORRO Y CREDITO SEÑOR DE GIRON</nombre></banco>
+		<banco><codigo>308</codigo><nombre>COOPERATIVA DE AHORRO Y CREDITO SERVIDORES MUNICIPALES DE CUENCA</nombre></banco>
+		<banco><codigo>309</codigo><nombre>COOPERATIVA DE AHORRO Y CREDITO SIMON BOLIVAR</nombre></banco>
+		<banco><codigo>163</codigo><nombre>COOPERATIVA DE AHORRO Y CREDITO SINCHI RUNA LTDA.</nombre></banco>
+		<banco><codigo>368</codigo><nombre>COOPERATIVA DE AHORRO Y CREDITO SOCIO AMIGO COOPSA</nombre></banco>
+		<banco><codigo>369</codigo><nombre>COOPERATIVA DE AHORRO Y CREDITO SOL DE LOS ANDES LTDA</nombre></banco>
+		<banco><codigo>370</codigo><nombre>COOPERATIVA DE AHORRO Y CREDITO SOLIDARIA LTDA</nombre></banco>
+		<banco><codigo>371</codigo><nombre>COOPERATIVA DE AHORRO Y CREDITO SOLIDARIA LTDA. GUALAQUIZA</nombre></banco>
+		<banco><codigo>372</codigo><nombre>COOPERATIVA DE AHORRO Y CREDITO SOLIDARIDAD Y PROGRESO ORIENTAL</nombre></banco>
+		<banco><codigo>325</codigo><nombre>COOPERATIVA DE AHORRO Y CREDITO SUMAC LLACTA LTDA.</nombre></banco>
+		<banco><codigo>373</codigo><nombre>COOPERATIVA DE AHORRO Y CREDITO SUMAK SAMY LTDA.</nombre></banco>
+		<banco><codigo>121</codigo><nombre>COOPERATIVA DE AHORRO Y CREDITO TENA LTDA.</nombre></banco>
+		<banco><codigo>381</codigo><nombre>COOPERATIVA DE AHORRO Y CREDITO TIENDA DE DINERO LTDA.</nombre></banco>
+		<banco><codigo>45</codigo><nombre>COOPERATIVA DE AHORRO Y CREDITO TULCAN</nombre></banco>
+		<banco><codigo>146</codigo><nombre>COOPERATIVA DE AHORRO Y CREDITO TUNGURAHUA LTDA.</nombre></banco>
+		<banco><codigo>168</codigo><nombre>COOPERATIVA DE AHORRO Y CREDITO UNIBLOCK Y SERVICIOS LTDA.</nombre></banco>
+		<banco><codigo>169</codigo><nombre>COOPERATIVA DE AHORRO Y CREDITO UNIOTAVALO LTDA</nombre></banco>
+		<banco><codigo>151</codigo><nombre>COOPERATIVA DE AHORRO Y CREDITO VENCEDORES DE TUNGURAHUA LTDA.</nombre></banco>
+		<banco><codigo>382</codigo><nombre>COOPERATIVA DE AHORRO Y CREDITO VILCABAMBA CACVIL</nombre></banco>
+		<banco><codigo>367</codigo><nombre>COOPERATIVA DE AHORRO Y CREDITO VIRGEN DEL CISNE</nombre></banco>
+		<banco><codigo>170</codigo><nombre>COOPERATIVA DE AHORRO Y CREDITO WARMIKUNAPAK RIKCHARI LTDA.</nombre></banco>
+		<banco><codigo>171</codigo><nombre>COOPERATIVA DE AHORRO Y CREDITO WUAMANLOMA LTDA.</nombre></banco>
+		<banco><codigo>172</codigo><nombre>COOPERATIVA DE SERVICIOS MULTIPLES AGRO VIDA COOSEMAV</nombre></banco>
+		<banco><codigo>93</codigo><nombre>COOPERATIVA JUVENTUD ECUATORIANA PROGRESISTA</nombre></banco>
+		<banco><codigo>173</codigo><nombre>COOPERTATIVA DE AHORRO Y CREDITO UNION QUISAPINCHA LTDA.</nombre></banco>
+		<banco><codigo>174</codigo><nombre>COOPJADAN LTDA, COOPERATIVA DE AHORRO Y CREDITO JADAN</nombre></banco>
+		<banco><codigo>108</codigo><nombre>MANUEL ESTEBAN GODOY ORTEGA LTDA COOPMEGO</nombre></banco>
+		<banco><codigo>86</codigo><nombre>MUTUALISTA AZUAY</nombre></banco>
+		<banco><codigo>379</codigo><nombre>MUTUALISTA CHIMBORAZO</nombre></banco>
+		<banco><codigo>79</codigo><nombre>MUTUALISTA IMBABURA</nombre></banco>
+		<banco><codigo>16</codigo><nombre>RED BANCARIA</nombre></banco>
+		<banco><codigo>89</codigo><nombre>SERVICIO DE RENTAS INTERNAS</nombre></banco>
+	</datos_bancos>
+	<!--+MP 22/feb/2006 -->
+	<datos_impuesto codigo="65">
+		<impuesto>
+			<codigo>1011</codigo>
+			<nombre>1011</nombre>
+		</impuesto>
+		<impuesto>
+			<codigo>1021</codigo>
+			<nombre>1021</nombre>
+		</impuesto>
+		<impuesto>
+			<codigo>1088</codigo>
+			<nombre>1088</nombre>
+		</impuesto>
+		<impuesto>
+			<codigo>2011</codigo>
+			<nombre>2011</nombre>
+		</impuesto>
+		<impuesto>
+			<codigo>2021</codigo>
+			<nombre>2021</nombre>
+		</impuesto>
+	</datos_impuesto>
+	<datos_impuesto_descripcion codigo="66">
+		<impuesto_descripcion>
+			<codigo>1011</codigo>
+			<nombre>1011 - RENTA PERSONAS NATURALES</nombre>
+		</impuesto_descripcion>
+		<impuesto_descripcion>
+			<codigo>1021</codigo>
+			<nombre>1021 - RENTA SOCIEDADES</nombre>
+		</impuesto_descripcion>
+		<impuesto_descripcion>
+			<codigo>1088</codigo>
+			<nombre>1088 - IMPUESTO A LA RENTA SOBRE INGRESOS DE HERENCIAS
+				LEGADOS Y DONACIONES
+			</nombre>
+		</impuesto_descripcion>
+		<impuesto_descripcion>
+			<codigo>2011</codigo>
+			<nombre>2011 - IVA MENSUAL</nombre>
+		</impuesto_descripcion>
+		<impuesto_descripcion>
+			<codigo>2021</codigo>
+			<nombre>2021 - IVA SEMESTRAL</nombre>
+		</impuesto_descripcion>
+	</datos_impuesto_descripcion>
+	<!--+MP 22/feb/2006 -->
+	<datos_valor_predeterminado codigo="70">
+		<valor_predeterminado>
+			<codigo>-1</codigo>
+			<nombre>NINGUNO</nombre>
+		</valor_predeterminado>
+		<valor_predeterminado>
+			<codigo>0</codigo>
+			<nombre>IMPUESTO</nombre>
+		</valor_predeterminado>
+		<valor_predeterminado>
+			<codigo>1</codigo>
+			<nombre>MES FISCAL</nombre>
+		</valor_predeterminado>
+		<valor_predeterminado>
+			<codigo>2</codigo>
+			<nombre>AÑO FISCAL</nombre>
+		</valor_predeterminado>
+		<valor_predeterminado>
+			<codigo>3</codigo>
+			<nombre>SEMESTRAL</nombre>
+		</valor_predeterminado>
+		<valor_predeterminado>
+			<codigo>4</codigo>
+			<nombre>VERSION FORMULARIO</nombre>
+		</valor_predeterminado>
+		<valor_predeterminado>
+			<codigo>5</codigo>
+			<nombre>DECLARACION ANTICIPADA</nombre>
+		</valor_predeterminado>
+		<valor_predeterminado>
+			<codigo>6</codigo>
+			<nombre>FORMA DE PAGO</nombre>
+		</valor_predeterminado>
+		<valor_predeterminado>
+			<codigo>7</codigo>
+			<nombre>BANCO</nombre>
+		</valor_predeterminado>
+		<valor_predeterminado>
+			<codigo>8</codigo>
+			<nombre>NUMERO DE FORMULARIO QUE RECTIFICA</nombre>
+		</valor_predeterminado>
+		<valor_predeterminado>
+			<codigo>9</codigo>
+			<nombre>SUSTITUTIVA/ORIGINAL</nombre>
+		</valor_predeterminado>
+		<valor_predeterminado>
+			<codigo>10</codigo>
+			<nombre>RUC</nombre>
+		</valor_predeterminado>
+		<valor_predeterminado>
+			<codigo>11</codigo>
+			<nombre>RAZON SOCIAL</nombre>
+		</valor_predeterminado>
+		<valor_predeterminado>
+			<codigo>12</codigo>
+			<nombre>TASA ICE</nombre>
+		</valor_predeterminado>
+		<valor_predeterminado>
+			<codigo>13</codigo>
+			<nombre>DESCRIPCION ICE</nombre>
+		</valor_predeterminado>
+		<valor_predeterminado>
+			<codigo>14</codigo>
+			<nombre>CODIGO IMPUESTO ICE</nombre>
+		</valor_predeterminado>
+		<valor_predeterminado>
+			<codigo>15</codigo>
+			<nombre>IDENTIFICACION REPRESENTANTE LEGAL</nombre>
+		</valor_predeterminado>
+		<valor_predeterminado>
+			<codigo>16</codigo>
+			<nombre>CONVENIO DOBLE TRIBUTACION</nombre>
+		</valor_predeterminado>
+		<!--+MP 22/feb/2006 -->
+		<valor_predeterminado>
+			<codigo>18</codigo>
+			<nombre>CODIGO IMPUESTO</nombre>
+		</valor_predeterminado>
+		<valor_predeterminado>
+			<codigo>19</codigo>
+			<nombre>DESCRIPCION IMPUESTO</nombre>
+		</valor_predeterminado>
+		<valor_predeterminado>
+			<codigo>20</codigo>
+			<nombre>DESCRIPCION DOCUMENTO</nombre>
+		</valor_predeterminado>
+		<!--+MP 22/feb/2006 -->
+	</datos_valor_predeterminado>
+	<datos_relacion_discapacitado codigo="75">
+	    <relacion>
+            <codigo>N</codigo>
+            <nombre>NO APLICA</nombre>
+        </relacion>
+        <relacion>
+            <codigo>P</codigo>
+            <nombre>PERSONA CON DISCAPACIDAD</nombre>
+        </relacion>
+        <relacion>
+            <codigo>U</codigo>
+            <nombre>PERSONA CON DISCAPACIDAD A QUIEN SUSTITUYE</nombre>
+        </relacion>
+    </datos_relacion_discapacitado>
+	<datos_concepto_relacionado codigo="80">
+		<concepto_relacionado>
+			<codigo>-1</codigo>
+			<nombre>NINGUNO</nombre>
+		</concepto_relacionado>
+		<concepto_relacionado>
+			<codigo>1</codigo>
+			<nombre>RAZON SOCIAL</nombre>
+		</concepto_relacionado>
+	</datos_concepto_relacionado>
+	<datos_rutina_validacion codigo="90">
+		<rutina_validacion>
+			<codigo>-1</codigo>
+			<nombre>NINGUNA</nombre>
+		</rutina_validacion>
+		<rutina_validacion>
+			<codigo>1</codigo>
+			<nombre>CEDULA</nombre>
+		</rutina_validacion>
+		<rutina_validacion>
+			<codigo>2</codigo>
+			<nombre>RUC</nombre>
+		</rutina_validacion>
+	</datos_rutina_validacion>
+	<datosImpuestosIce codigo="100">
+	</datosImpuestosIce>
+	<datosDobleTributacion codigo="110">
+	</datosDobleTributacion>
+	<datosSiNo codigo="120">
+		<!-- valor reconocido como vacio -->
+		<siNo>
+			<codigo>-1</codigo>
+			<descripcion></descripcion>
+		</siNo>
+		<siNo>
+			<codigo>1</codigo>
+			<descripcion>SI</descripcion>
+		</siNo>
+		<siNo>
+			<codigo>2</codigo>
+			<descripcion>NO</descripcion>
+		</siNo>
+	</datosSiNo>
+	<datosEstadoCivil codigo="130">
+		<!-- valor reconocido como vacio -->
+		<estadoCivil>
+			<codigo>-1</codigo>
+			<descripcion></descripcion>
+		</estadoCivil>
+		<estadoCivil>
+			<codigo>1</codigo>
+			<descripcion>CASADO/A</descripcion>
+		</estadoCivil>
+		<estadoCivil>
+			<codigo>2</codigo>
+			<descripcion>SOLTERO/A</descripcion>
+		</estadoCivil>
+		<estadoCivil>
+			<codigo>3</codigo>
+			<descripcion>DIVORCIADO/A</descripcion>
+		</estadoCivil>
+		<estadoCivil>
+			<codigo>4</codigo>
+			<descripcion>VIUDO/A</descripcion>
+		</estadoCivil>
+		<estadoCivil>
+			<codigo>5</codigo>
+			<descripcion>UNION LIBRE</descripcion>
+		</estadoCivil>
+	</datosEstadoCivil>
+	<datosTipoActoDonacion codigo="140">
+		<!-- valor reconocido como vacio -->
+		<tipoActoDonacion>
+			<codigo>-1</codigo>
+			<descripcion></descripcion>
+		</tipoActoDonacion>
+		<tipoActoDonacion>
+			<codigo>0</codigo>
+			<descripcion>NINGUNO</descripcion>
+		</tipoActoDonacion>
+		<tipoActoDonacion>
+			<codigo>1</codigo>
+			<descripcion>DONACIÓN SIN RESERVA DE NINGUNA CLASE</descripcion>
+		</tipoActoDonacion>
+		<tipoActoDonacion>
+			<codigo>2</codigo>
+			<descripcion>DONACIÓN CON RESERVA DE USUFRUCTO</descripcion>
+		</tipoActoDonacion>
+		<tipoActoDonacion>
+			<codigo>3</codigo>
+			<descripcion>CAPITULACIONES MATRIMONIALES A TÍTULO GRATUITO
+			</descripcion>
+		</tipoActoDonacion>
+		<tipoActoDonacion>
+			<codigo>4</codigo>
+			<descripcion>CONSTITUCIÓN DE DERECHO DE USUFRUCTO</descripcion>
+		</tipoActoDonacion>
+		<tipoActoDonacion>
+			<codigo>5</codigo>
+			<descripcion>RENUNCIA DE DERECHO DE USUFRUCTO</descripcion>
+		</tipoActoDonacion>
+		<tipoActoDonacion>
+			<codigo>6</codigo>
+			<descripcion>DONACIÓN EN UNA LIQUIDACIÓN DE SOCIEDAD CONYUGAL
+			</descripcion>
+		</tipoActoDonacion>
+		<tipoActoDonacion>
+			<codigo>7</codigo>
+			<descripcion>CESIÓN DE DERECHO DE USUFRUCTO</descripcion>
+		</tipoActoDonacion>
+		<tipoActoDonacion>
+			<codigo>8</codigo>
+			<descripcion>RENUNCIA DE GANANCIALES</descripcion>
+		</tipoActoDonacion>
+		<tipoActoDonacion>
+			<codigo>9</codigo>
+			<descripcion>CANCELACIÓN DE DERECHO DE USUFRUCTO</descripcion>
+		</tipoActoDonacion>
+	</datosTipoActoDonacion>
+	<!--+MP 22/feb/2006 -->
+	<datos_codigo_documento codigo="150">
+		<codigo_documento>
+			<!-- valor reconocido como vacio -->
+			<codigo>-1</codigo>
+			<nombre></nombre>
+		</codigo_documento>
+		<!--<codigo_documento> <codigo>1</codigo> <nombre>1 - TITULO DE CRÉDITO</nombre> 
+			</codigo_documento> <codigo_documento> <codigo>2</codigo> <nombre>2 - RESOLUCIÓN 
+			ADMINISTRATIVA</nombre> </codigo_documento> <codigo_documento> <codigo>3</codigo> 
+			<nombre>3 - REQUERIMIENTO DE DIFERENCIAS DE PAGO</nombre> </codigo_documento> 
+			<codigo_documento> <codigo>4</codigo> <nombre>4 - ACTAS DE DETERMINACIÓN</nombre> 
+			</codigo_documento> <codigo_documento> <codigo>5</codigo> <nombre>5 - RESOLUCIÓN 
+			DE OMISOS</nombre> </codigo_documento> <codigo_documento> <codigo>6</codigo> 
+			<nombre>6 - OFICIO</nombre> </codigo_documento> <codigo_documento> <codigo>7</codigo> 
+			<nombre>7 - SANCIÓN DE ANEXOS</nombre> </codigo_documento> -->
+		<codigo_documento>
+			<codigo>8</codigo>
+			<nombre>NO ESPECIFICADO</nombre>
+		</codigo_documento>
+		<!--<codigo_documento> <codigo>9</codigo> <nombre>9 - SENTENCIAS</nombre> 
+			</codigo_documento> <codigo_documento> <codigo>10</codigo> <nombre>10 - LIQUIDACIONES 
+			DE PAGO</nombre> </codigo_documento> <codigo_documento> <codigo>11</codigo> 
+			<nombre>11 - NINGUNA</nombre> </codigo_documento> -->
+	</datos_codigo_documento>
+	<!--+MP 22/feb/2006 -->
+</datos_referenciales>

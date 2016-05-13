@@ -1,7 +1,7 @@
 
 import os
 from ..widget_factory import WidgetFactory
-from base_window import BaseWindow
+from base import BaseWindow
 
 
 class DeclaracionWindow(BaseWindow):
@@ -11,7 +11,7 @@ class DeclaracionWindow(BaseWindow):
         BaseWindow.__init__(self, gladefile, "declaracionWindow")
 
     def post_init(self):
-        factory = WidgetFactory('04201403')
+        factory = WidgetFactory('04201603')
         widgets = factory.build_widgets()
 
         layout = self.builder.get_object("fixed1")

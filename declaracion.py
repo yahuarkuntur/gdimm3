@@ -3,7 +3,7 @@
 import gi
 gi.require_version('Gtk', '3.0')
 from gi.repository import Gtk
-from src.windows.declaracion_window import DeclaracionWindow
+from src.windows.declaracion import DeclaracionWindow
 
 
 if __name__ == "__main__":
