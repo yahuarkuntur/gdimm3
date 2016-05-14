@@ -7,6 +7,7 @@ from gi.repository import Gtk
 from base import BaseWindow, DialogBox
 from ..gtk.utils import *
 from ..models.datos import DatosModel
+from ..models.declaracion import DeclaracionModel
 from ..models.contribuyentes import ContribuyentesModel
 from contribuyente import ContribuyenteWindow
 from declaracion import DeclaracionWindow
@@ -71,6 +72,8 @@ class MainWindow(BaseWindow):
         self.hbSustituye = self.builder.get_object("hbSustituye")
         self.rbSemestral = self.builder.get_object("rbSemestral")
         self.rbMensual = self.builder.get_object("rbMensual")
+        self.rbSustitutiva = self.builder.get_object("rbSustitutiva")
+        self.txtSustituye = self.builder.get_object("txtSustituye")
 
         # load comboboxes and show window
         self.load_contribuyentes()
@@ -84,8 +87,7 @@ class MainWindow(BaseWindow):
         contribuyente_window.show()
 
     def on_btnEditar_clicked(self, obj, data=None):
-        declaracion_window = DeclaracionWindow()
-        declaracion_window.show()
+        pass
 
     def on_btnHelp_clicked(self, obj, data=None):
         pass
@@ -97,7 +99,51 @@ class MainWindow(BaseWindow):
         Gtk.main_quit()
 
     def on_btnAceptar_clicked(self, obj, data=None):
-        pass
+        # alias del formulario
+        version = get_active_text(self.cmbFormularios)
+        alias = ''
+        for item in self.datos_model.get_full_list_from_code(5):
+            if item['version'] == version:
+                alias = item['nombre']
+        alias = alias.replace("FORMULARIO ", "")
+
+        # obtener anio
+        anio = get_active_text(self.cmbAnios)
+
+        # obtener mes o periodo
+        periodo = get_active_text(self.cmbPeriodos)
+
+        # info del formulario seleccionado
+        formularios = self.datos_model.get_full_list_from_code(5)
+        data = self.datos_model.find_item_from_key_value(
+            formularios,
+            'version',
+            version
+        )
+
+        codigo_version = self.datos_model.get_codigo_version_formulario(
+            data['nombre'],
+            data['periodicidad']
+        )
+
+        # init model
+        declaracion = DeclaracionModel()
+        declaracion.set_alias_formulario(alias)
+        declaracion.set_anio(anio)
+        declaracion.set_mes(periodo)
+        declaracion.set_periodicidad(data['periodicidad'])
+        declaracion.set_version(version)
+        declaracion.set_codigo_version(codigo_version)
+
+        # sustitutiva ?
+        if self.rbSustitutiva.get_active():
+            declaracion.set_original('S')
+            declaracion.set_sustituye(self.txtSustituye.get_text())
+
+        # show window
+        declaracion_window = DeclaracionWindow()
+        declaracion_window.set_model(declaracion)
+        declaracion_window.show()
 
     def on_rbSustitutiva_toggled(self, obj, data=None):
         if obj.get_active():

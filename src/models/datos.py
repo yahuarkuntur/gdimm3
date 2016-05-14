@@ -53,4 +53,12 @@ class DatosModel:
 
         return data
 
+    def get_codigo_version_formulario(self, nombre, periodicidad):
+        nodes = self.tree.findall('datosFormulariosVersiones/formularioVersion[@nombre="'+nombre+'"]')
+
+        for node in nodes:
+            if node.attrib.get('periodicidad') == periodicidad:
+                return node.attrib.get('versionVigente')
+        return None
+
 # EOF
