@@ -16,7 +16,10 @@ class ContribuyenteWindow(BaseWindow):
         BaseWindow.__init__(self, gladefile, "contribuyenteWindow")
 
     def on_window_destroy(self, object, data=None):
-        Gtk.main_quit()
+        self.window.destroy()
+
+    def on_btnClose_clicked(self, obj, data=None):
+        self.window.destroy()
 
     def on_btnNuevo_clicked(self, obj, data=None):
         contrib = self.contribuyentes.get_empty_model_item()
@@ -27,10 +30,10 @@ class ContribuyenteWindow(BaseWindow):
         contribuyente_window.show()
 
     def on_btnEditar_clicked(self, obj, data=None):
-        treeselection = self.trContribuyentes.get_selection()
-        (model, treeiter) = treeselection.get_selected()
-        if treeiter is not None:
-            contrib = self.contribuyentes.find_by_ruc(model[treeiter][0])
+        selection = self.trContribuyentes.get_selection()
+        (model, aiter) = selection.get_selected()
+        if aiter is not None:
+            contrib = self.contribuyentes.find_by_ruc(model[aiter][0])
             if contrib:
                 contribuyente_window = EditarContribuyenteWindow()
                 contribuyente_window.set_data(contrib)
@@ -40,20 +43,14 @@ class ContribuyenteWindow(BaseWindow):
             # TODO mostrar mensaje de error
             pass
 
-    def on_btnClose_clicked(self, obj, data=None):
-        self.window.destroy()
-
     def on_btnBorrar_clicked(self, obj, data=None):
         print "on_btnBorrar_clicked"
 
-    #def on_trContribuyentes_select_cursor_row(self, widget, data=None):
-    #    print "on_trContribuyentes_select_cursor_row"
-
-    def on_trContribuyentes_row_activated(self, treeview, treeiter, path, data=None):
-        treeselection = treeview.get_selection()
-        (model, treeiter) = treeselection.get_selected()
-        if treeiter is not None:
-            contrib = self.contribuyentes.find_by_ruc(model[treeiter][0])
+    def on_trContribuyentes_row_activated(self, obj, aiter, path, data=None):
+        selection = obj.get_selection()
+        (model, aiter) = selection.get_selected()
+        if aiter is not None:
+            contrib = self.contribuyentes.find_by_ruc(model[aiter][0])
             if contrib:
                 contribuyente_window = EditarContribuyenteWindow()
                 contribuyente_window.set_data(contrib)
@@ -68,11 +65,11 @@ class ContribuyenteWindow(BaseWindow):
             DialogBox('Ha ocurrido un error!', 'error', self.window, str(ex))
             return
 
-        cont = 1
         self.lista_contribuyentes.clear()
         for item in self.contribuyentes.get_elements():
-            self.lista_contribuyentes.append([item.get_ruc(),item.get_nombre()])
-            cont += 1
+            text = item.get_nombre()
+            key = item.get_ruc()
+            self.lista_contribuyentes.append([key, text])
 
     def show_contribuyentes(self):
         # load tree view with data
@@ -103,11 +100,14 @@ class ContribuyenteWindow(BaseWindow):
         self.columna_nombre.set_sort_column_id(1)
 
     def post_init(self):
+        # setup widgets
         self.trContribuyentes = self.builder.get_object("trContribuyentes")
         self.lista_contribuyentes = Gtk.ListStore(str, str)
         self.trContribuyentes.set_model(self.lista_contribuyentes)
-
+        # show items
         self.show_contribuyentes()
+
+    def show(self):
         self.window.show()
 
 # EOF

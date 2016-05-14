@@ -5,16 +5,11 @@ import gi
 gi.require_version('Gtk', '3.0')
 from gi.repository import Gtk
 from base import BaseWindow, DialogBox
+from ..gtk.utils import *
 from ..models.datos import DatosModel
 from ..models.contribuyentes import ContribuyentesModel
-
-
-def get_active_text(combobox):
-    iter = combobox.get_active_iter()
-    model = combobox.get_model()
-    if iter is None:
-        return None
-    return str(model.get_value(iter, 1))
+from contribuyente import ContribuyenteWindow
+from declaracion import DeclaracionWindow
 
 
 class MainWindow(BaseWindow):
@@ -31,7 +26,7 @@ class MainWindow(BaseWindow):
         combobox.set_model(list_store)
         combobox.clear()
         combobox.set_active(0)
-        
+
         renderer_text = Gtk.CellRendererText()
         combobox.pack_start(renderer_text, True)
         combobox.add_attribute(renderer_text, "text", 0)
@@ -52,9 +47,12 @@ class MainWindow(BaseWindow):
             list_store.append([text, item['version']])
         self.update_combobox(self.cmbFormularios, list_store)
 
-    def load_periodos(self, code=20):
+    def load_periodos(self, code=-1):
+        items = []
+        if code != -1:
+            items = self.datos_model.get_list_from_code(code)
         list_store = Gtk.ListStore(str, str)
-        for item in self.datos_model.get_list_from_code(code):
+        for item in items:
             list_store.append([item[1], item[0]])
         self.update_combobox(self.cmbPeriodos, list_store)
 
@@ -73,7 +71,7 @@ class MainWindow(BaseWindow):
         self.hbSustituye = self.builder.get_object("hbSustituye")
         self.rbSemestral = self.builder.get_object("rbSemestral")
         self.rbMensual = self.builder.get_object("rbMensual")
-        
+
         # load comboboxes and show window
         self.load_contribuyentes()
         self.load_formularios()
@@ -81,12 +79,13 @@ class MainWindow(BaseWindow):
         self.load_anios()
         self.window.show()
 
-
-    def on_btnNuevaDeclaracion_clicked(self, obj, data=None):
-        pass
+    def on_btnContribuyentes_clicked(self, obj, data=None):
+        contribuyente_window = ContribuyenteWindow()
+        contribuyente_window.show()
 
     def on_btnEditar_clicked(self, obj, data=None):
-        pass
+        declaracion_window = DeclaracionWindow()
+        declaracion_window.show()
 
     def on_btnHelp_clicked(self, obj, data=None):
         pass
@@ -95,30 +94,31 @@ class MainWindow(BaseWindow):
         pass
 
     def on_btnClose_clicked(self, obj, data=None):
-        pass
+        Gtk.main_quit()
 
     def on_btnAceptar_clicked(self, obj, data=None):
         pass
 
     def on_rbSustitutiva_toggled(self, obj, data=None):
-        if obj.get_active() :
+        if obj.get_active():
             self.hbSustituye.show()
         else:
             self.hbSustituye.hide()
 
-    def on_rbSemestral_toggled(self, obj, data=None):
-        pass
-
     def on_cmbFormularios_changed(self, obj, data=None):
         version = get_active_text(obj)
         formularios = self.datos_model.get_full_list_from_code(5)
-        data = self.datos_model.find_item_from_key_value(formularios, 'version', version)
+        data = self.datos_model.find_item_from_key_value(
+            formularios,
+            'version',
+            version
+        )
 
         if data['periodicidad'] == "SEMESTRAL":
-            self.load_periodos(40)  # semestral
+            self.load_periodos(40)
         elif data['periodicidad'] == "MENSUAL":
-            self.load_periodos(20)  # mensual
-        else:  # anual
-            pass
+            self.load_periodos(20)
+        else:
+            self.load_periodos(-1)  # anual
 
 # EOF

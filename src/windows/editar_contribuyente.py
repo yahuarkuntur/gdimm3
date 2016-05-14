@@ -26,19 +26,13 @@ class EditarContribuyenteWindow(BaseWindow):
         aiter = self.cmbTipoDocumento.get_active_iter()
         if aiter:
             contrib.set_tipo_documento(self.modeloTipo.get_value(aiter, 1))
-        
-        # TODO ejecutar validaciones del modelo    
-        #try:
-	    #    contrib.verify_documents()
-        #except gDimmDocumentException as dex:
-        #    ezGlade.DialogBox(dex.value, type = 'error', window = self.win)
-        #    return None
-			
+
+        # TODO ejecutar validaciones del modelo
         self.model.add(contrib)
         self.model.save()
 
         # TODO recargar lista de contribuyentes
-        #self.parent.load_list()
+        # self.parent.load_list()
         self.window.destroy()
 
     def set_data(self, model):
@@ -61,7 +55,7 @@ class EditarContribuyenteWindow(BaseWindow):
         self.modeloTipo = Gtk.ListStore(str, str)
         self.modeloTipo.append(['Cédula', "C"])
         self.modeloTipo.append(['Pasaporte', "P"])
-        
+
         self.cmbTipoDocumento.set_model(self.modeloTipo)
         self.cmbTipoDocumento.set_active(0)
 

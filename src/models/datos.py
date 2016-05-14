@@ -6,8 +6,8 @@ from lxml import etree
 class DatosModel:
 
     def __init__(self):
-        self.parser = etree.XMLParser(remove_comments=True, encoding='utf8')    
-        self.tree = etree.parse(os.path.join('xml','DtsRfr.xml'), self.parser)
+        self.parser = etree.XMLParser(remove_comments=True, encoding='utf8')
+        self.tree = etree.parse(os.path.join('xml', 'DtsRfr.xml'), self.parser)
 
     def get_list_from_code(self, code):
         data = []
@@ -31,23 +31,6 @@ class DatosModel:
 
         return data
 
-    #def get_datos_formularios(self, code=5):
-    #    data = []
-    #    nodes = self.tree.find('/*[@codigo="'+str(code)+'"]')
-    
-    #    if nodes is None:
-    #        return data
-
-    #    for node in nodes:
-    #        periodicidad = node.attrib.get('periodicidad')
-    #        nombre = node.attrib.get('nombre')
-    #        version = node.attrib.get('version')
-    #        desc = node.attrib.get('descripcion_impuesto')
-    #        data.append([version, nombre + ' - '  + desc])
-
-    #    return data
-
-
     def find_item_from_key_value(self, items, key, value):
         for item in items:
             if key in item.keys():
@@ -58,7 +41,7 @@ class DatosModel:
     def get_full_list_from_code(self, code):
         data = []
         nodes = self.tree.find('/*[@codigo="'+str(code)+'"]')
-    
+
         if nodes is None:
             return data
 
