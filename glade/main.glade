@@ -195,6 +195,59 @@ Medio Magnético&lt;/b&gt;
                       </packing>
                     </child>
                     <child>
+                      <object class="GtkButton" id="btnContribuyentes">
+                        <property name="visible">True</property>
+                        <property name="can_focus">True</property>
+                        <property name="can_default">True</property>
+                        <property name="receives_default">False</property>
+                        <child>
+                          <object class="GtkAlignment" id="alignment2">
+                            <property name="visible">True</property>
+                            <property name="can_focus">False</property>
+                            <property name="xscale">0</property>
+                            <property name="yscale">0</property>
+                            <child>
+                              <object class="GtkBox" id="hbox2">
+                                <property name="visible">True</property>
+                                <property name="can_focus">False</property>
+                                <property name="spacing">2</property>
+                                <child>
+                                  <object class="GtkImage" id="image2">
+                                    <property name="visible">True</property>
+                                    <property name="can_focus">False</property>
+                                    <property name="stock">gtk-edit</property>
+                                  </object>
+                                  <packing>
+                                    <property name="expand">False</property>
+                                    <property name="fill">False</property>
+                                    <property name="position">0</property>
+                                  </packing>
+                                </child>
+                                <child>
+                                  <object class="GtkLabel" id="label2">
+                                    <property name="visible">True</property>
+                                    <property name="can_focus">False</property>
+                                    <property name="label" translatable="yes">_Contribuyentes</property>
+                                    <property name="use_underline">True</property>
+                                  </object>
+                                  <packing>
+                                    <property name="expand">False</property>
+                                    <property name="fill">False</property>
+                                    <property name="position">1</property>
+                                  </packing>
+                                </child>
+                              </object>
+                            </child>
+                          </object>
+                        </child>
+                      </object>
+                      <packing>
+                        <property name="expand">False</property>
+                        <property name="fill">False</property>
+                        <property name="position">2</property>
+                      </packing>
+                    </child>
+                    <child>
                       <object class="GtkButton" id="btnHelp">
                         <property name="label">gtk-help</property>
                         <property name="visible">True</property>
@@ -207,7 +260,7 @@ Medio Magnético&lt;/b&gt;
                       <packing>
                         <property name="expand">False</property>
                         <property name="fill">False</property>
-                        <property name="position">2</property>
+                        <property name="position">3</property>
                       </packing>
                     </child>
                     <child>
@@ -223,7 +276,7 @@ Medio Magnético&lt;/b&gt;
                       <packing>
                         <property name="expand">False</property>
                         <property name="fill">False</property>
-                        <property name="position">3</property>
+                        <property name="position">4</property>
                       </packing>
                     </child>
                     <child>
@@ -239,7 +292,7 @@ Medio Magnético&lt;/b&gt;
                       <packing>
                         <property name="expand">False</property>
                         <property name="fill">False</property>
-                        <property name="position">4</property>
+                        <property name="position">5</property>
                       </packing>
                     </child>
                   </object>
@@ -273,7 +326,7 @@ Medio Magnético&lt;/b&gt;
                         <property name="row_spacing">32</property>
                         <property name="column_spacing">6</property>
                         <child>
-                          <object class="GtkComboBox" id="cmbAnio">
+                          <object class="GtkComboBox" id="cmbAnios">
                             <property name="visible">True</property>
                             <property name="can_focus">False</property>
                           </object>
@@ -315,12 +368,11 @@ Medio Magnético&lt;/b&gt;
                           </packing>
                         </child>
                         <child>
-                          <object class="GtkComboBox" id="cmbContribuyente">
+                          <object class="GtkComboBox" id="cmbContribuyentes">
                             <property name="visible">True</property>
                             <property name="can_focus">True</property>
                             <property name="hexpand">True</property>
                             <property name="border_width">1</property>
-                            <signal name="changed" handler="on_cmbContribuyente_changed" swapped="no"/>
                           </object>
                           <packing>
                             <property name="left_attach">1</property>
@@ -336,7 +388,6 @@ Medio Magnético&lt;/b&gt;
                             <property name="orientation">vertical</property>
                             <child>
                               <object class="GtkBox" id="hbPeriodo">
-                                <property name="visible">True</property>
                                 <property name="can_focus">False</property>
                                 <child>
                                   <object class="GtkRadioButton" id="rbMensual">
@@ -380,7 +431,7 @@ Medio Magnético&lt;/b&gt;
                               </packing>
                             </child>
                             <child>
-                              <object class="GtkComboBox" id="cmbPeriodo">
+                              <object class="GtkComboBox" id="cmbPeriodos">
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
                               </object>
@@ -521,7 +572,6 @@ Medio Magnético&lt;/b&gt;
                             </child>
                             <child>
                               <object class="GtkBox" id="hbSustituye">
-                                <property name="visible">True</property>
                                 <property name="can_focus">False</property>
                                 <child>
                                   <object class="GtkLabel" id="lblSustituye">

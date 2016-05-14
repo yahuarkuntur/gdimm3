@@ -31,4 +31,43 @@ class DatosModel:
 
         return data
 
+    #def get_datos_formularios(self, code=5):
+    #    data = []
+    #    nodes = self.tree.find('/*[@codigo="'+str(code)+'"]')
+    
+    #    if nodes is None:
+    #        return data
+
+    #    for node in nodes:
+    #        periodicidad = node.attrib.get('periodicidad')
+    #        nombre = node.attrib.get('nombre')
+    #        version = node.attrib.get('version')
+    #        desc = node.attrib.get('descripcion_impuesto')
+    #        data.append([version, nombre + ' - '  + desc])
+
+    #    return data
+
+
+    def find_item_from_key_value(self, items, key, value):
+        for item in items:
+            if key in item.keys():
+                if item[key] == value:
+                    return item
+        return None
+
+    def get_full_list_from_code(self, code):
+        data = []
+        nodes = self.tree.find('/*[@codigo="'+str(code)+'"]')
+    
+        if nodes is None:
+            return data
+
+        for node in nodes:
+            a = dict()
+            for name, value in node.items():
+                a[name] = value
+            data.append(a)
+
+        return data
+
 # EOF
