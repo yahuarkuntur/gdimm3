@@ -19,6 +19,11 @@ class EditarContribuyenteWindow(BaseWindow):
     def on_btnCancel_clicked(self, obj, data=None):
         self.window.destroy()
 
+    def on_numericfield_changed(self, entry):
+        text = entry.get_text()
+        text = unicode(text).strip()
+        entry.set_text(''.join([i for i in text if i in '0123456789']))
+
     def on_btnSave_clicked(self, obj, data=None):
         contrib = ContribuyenteModel()
         contrib.set_ruc(self.eRUC.get_text())
@@ -33,7 +38,7 @@ class EditarContribuyenteWindow(BaseWindow):
         self.model.add(contrib)
         self.model.save()
 
-        # TODO recargar lista de contribuyentes
+        # recargar listado principal
         self.parent.load_list()
         self.window.destroy()
 
@@ -55,6 +60,10 @@ class EditarContribuyenteWindow(BaseWindow):
         self.eRazonSocial = self.builder.get_object("eRazonSocial")
         self.eDocumento = self.builder.get_object("eDocumento")
         self.cmbTipoDocumento = self.builder.get_object("cmbTipoDocumento")
+
+        # connect events
+        self.eRUC.connect("changed", self.on_numericfield_changed)
+        self.eDocumento.connect("changed", self.on_numericfield_changed)
 
         self.modeloTipo = Gtk.ListStore(str, str)
         self.modeloTipo.append(['Cédula', "C"])

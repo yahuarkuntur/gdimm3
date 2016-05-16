@@ -84,9 +84,9 @@ class MainWindow(BaseWindow):
         self.window.show()
 
     def on_btnContribuyentes_clicked(self, obj, data=None):
-        contribuyente_window = ContribuyenteWindow()
-        contribuyente_window.set_parent(self)
-        contribuyente_window.show()
+        window = ContribuyenteWindow()
+        window.set_parent(self)
+        window.show()
 
     def on_btnEditar_clicked(self, obj, data=None):
         pass
@@ -143,10 +143,10 @@ class MainWindow(BaseWindow):
             declaracion.set_sustituye(self.txtSustituye.get_text())
 
         # show window
-        declaracion_window = DeclaracionWindow()
-        declaracion_window.set_parent(self)
-        declaracion_window.set_model(declaracion)
-        declaracion_window.show()
+        window = DeclaracionWindow()
+        window.set_parent(self)
+        window.set_model(declaracion)
+        window.show()
 
     def on_rbSustitutiva_toggled(self, obj, data=None):
         if obj.get_active():

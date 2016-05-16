@@ -24,12 +24,12 @@ class ContribuyenteWindow(BaseWindow):
 
     def on_btnNuevo_clicked(self, obj, data=None):
         contrib = self.contribuyentes.get_empty_model_item()
-        contribuyente_window = EditarContribuyenteWindow()
-        contribuyente_window.set_parent(self)
-        contribuyente_window.set_data(contrib)
-        contribuyente_window.set_model(self.contribuyentes)
-        contribuyente_window.eRUC.set_editable(True)
-        contribuyente_window.show()
+        window = EditarContribuyenteWindow()
+        window.set_parent(self)
+        window.set_data(contrib)
+        window.set_model(self.contribuyentes)
+        window.eRUC.set_editable(True)
+        window.show()
 
     def on_btnEditar_clicked(self, obj, data=None):
         selection = self.trContribuyentes.get_selection()
@@ -38,12 +38,32 @@ class ContribuyenteWindow(BaseWindow):
             contrib = self.contribuyentes.find_by_ruc(model[aiter][0])
             if contrib:
                 self.show_editar_window(contrib)
-        else:
-            # TODO mostrar mensaje de error
-            pass
 
     def on_btnBorrar_clicked(self, obj, data=None):
-        print "on_btnBorrar_clicked"
+        contribuyente = self.get_selected_contribuyente()
+        if contribuyente is None:
+            return
+
+        dialog = Gtk.MessageDialog(
+            parent=self.window,
+            flags=Gtk.DialogFlags.MODAL,
+            type=Gtk.MessageType.ERROR,
+            buttons=Gtk.ButtonsType.OK_CANCEL,
+            message_format="Está seguro de eliminar?"
+        )
+        dialog.format_secondary_text(
+            'El contribuyente "%s" será eliminado.' %
+            (contribuyente.get_ruc())
+        )
+
+        if dialog.run() == Gtk.ResponseType.CANCEL:
+            dialog.destroy()
+            return
+        dialog.destroy()
+
+        self.contribuyentes.remove(contribuyente.get_ruc())
+        self.contribuyentes.save()
+        self.load_list()  # recargar listado
 
     def on_trContribuyentes_row_activated(self, obj, aiter, path, data=None):
         selection = obj.get_selection()
@@ -52,6 +72,18 @@ class ContribuyenteWindow(BaseWindow):
             contrib = self.contribuyentes.find_by_ruc(model[aiter][0])
             if contrib:
                 self.show_editar_window(contrib)
+
+    def get_treeview_selection(self):
+        selection = self.trContribuyentes.get_selection()
+        (model, aiter) = selection.get_selected()
+        return (model, aiter)
+
+    def get_selected_contribuyente(self):
+        (model, aiter) = self.get_treeview_selection()
+        if aiter is not None:
+            contribuyente = self.contribuyentes.find_by_ruc(model[aiter][0])
+            return contribuyente
+        return None
 
     def load_list(self):
         try:
@@ -66,6 +98,10 @@ class ContribuyenteWindow(BaseWindow):
             text = item.get_nombre()
             key = item.get_ruc()
             self.lista_contribuyentes.append([key, text])
+
+        # recargar listado de contribuyentes de la ventana principal
+        if self.parent:
+            self.parent.load_contribuyentes()
 
     def show_contribuyentes(self):
         # load tree view with data
@@ -100,6 +136,7 @@ class ContribuyenteWindow(BaseWindow):
         self.trContribuyentes = self.builder.get_object("trContribuyentes")
         self.lista_contribuyentes = Gtk.ListStore(str, str)
         self.trContribuyentes.set_model(self.lista_contribuyentes)
+
         # show items
         self.show_contribuyentes()
 

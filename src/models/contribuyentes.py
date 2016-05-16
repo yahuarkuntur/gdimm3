@@ -41,7 +41,7 @@ class ContribuyentesModel:
             raise TypeError('El argumento no es un objeto tipo contribuyente')
 
         item_index = self.exists_replace(contribuyente.get_ruc())
-        if item_index:
+        if item_index is not None:
             self.lista[item_index] = contribuyente
         else:
             self.lista.append(contribuyente)
