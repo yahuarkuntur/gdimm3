@@ -6,6 +6,7 @@ gi.require_version('Gtk', '3.0')
 from gi.repository import Gtk
 from base import BaseWindow
 from ..models.contribuyente import ContribuyenteModel
+from ..gtk.decorator import Decorator
 
 
 class EditarContribuyenteWindow(BaseWindow):
@@ -13,6 +14,7 @@ class EditarContribuyenteWindow(BaseWindow):
     def __init__(self):
         gladefile = os.path.join("glade", "editar_contribuyente.glade")
         BaseWindow.__init__(self, gladefile, "editarContribuyenteWindow")
+        self.set_modal(True)
 
     def on_btnCancel_clicked(self, obj, data=None):
         self.window.destroy()
@@ -32,7 +34,7 @@ class EditarContribuyenteWindow(BaseWindow):
         self.model.save()
 
         # TODO recargar lista de contribuyentes
-        # self.parent.load_list()
+        self.parent.load_list()
         self.window.destroy()
 
     def set_data(self, model):
@@ -44,6 +46,8 @@ class EditarContribuyenteWindow(BaseWindow):
         self.model = model
 
     def show(self):
+        if not self.eRUC.get_editable():
+            Decorator.disabled(self.eRUC)
         self.window.show()
 
     def post_init(self):

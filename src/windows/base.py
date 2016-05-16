@@ -30,12 +30,20 @@ def DialogBox(text, type='error', window=None, secondary_text=None):
 class BaseWindow(object):
 
     def __init__(self, gladefile, window_id):
+        self.parent = None
         self.gladefile = gladefile
         self.builder = Gtk.Builder()
         self.builder.add_from_file(self.gladefile)
         self.builder.connect_signals(self)
         self.window = self.builder.get_object(window_id)
         self.post_init()
+
+    def set_parent(self, parent):
+        self.parent = parent
+        self.window.set_transient_for(parent.window)
+
+    def set_modal(self, is_modal=False):
+        self.window.set_modal(is_modal)
 
     def on_window_destroy(self, object, data=None):
         self.window.destroy()

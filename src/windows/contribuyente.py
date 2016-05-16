@@ -14,6 +14,7 @@ class ContribuyenteWindow(BaseWindow):
     def __init__(self):
         gladefile = os.path.join("glade", "contribuyente.glade")
         BaseWindow.__init__(self, gladefile, "contribuyenteWindow")
+        self.set_modal(True)
 
     def on_window_destroy(self, object, data=None):
         self.window.destroy()
@@ -24,6 +25,7 @@ class ContribuyenteWindow(BaseWindow):
     def on_btnNuevo_clicked(self, obj, data=None):
         contrib = self.contribuyentes.get_empty_model_item()
         contribuyente_window = EditarContribuyenteWindow()
+        contribuyente_window.set_parent(self)
         contribuyente_window.set_data(contrib)
         contribuyente_window.set_model(self.contribuyentes)
         contribuyente_window.eRUC.set_editable(True)
@@ -35,10 +37,7 @@ class ContribuyenteWindow(BaseWindow):
         if aiter is not None:
             contrib = self.contribuyentes.find_by_ruc(model[aiter][0])
             if contrib:
-                contribuyente_window = EditarContribuyenteWindow()
-                contribuyente_window.set_data(contrib)
-                contribuyente_window.set_model(self.contribuyentes)
-                contribuyente_window.show()
+                self.show_editar_window(contrib)
         else:
             # TODO mostrar mensaje de error
             pass
@@ -52,10 +51,7 @@ class ContribuyenteWindow(BaseWindow):
         if aiter is not None:
             contrib = self.contribuyentes.find_by_ruc(model[aiter][0])
             if contrib:
-                contribuyente_window = EditarContribuyenteWindow()
-                contribuyente_window.set_data(contrib)
-                contribuyente_window.set_model(self.contribuyentes)
-                contribuyente_window.show()
+                self.show_editar_window(contrib)
 
     def load_list(self):
         try:
@@ -106,6 +102,13 @@ class ContribuyenteWindow(BaseWindow):
         self.trContribuyentes.set_model(self.lista_contribuyentes)
         # show items
         self.show_contribuyentes()
+
+    def show_editar_window(self, contribuyente):
+        window = EditarContribuyenteWindow()
+        window.set_parent(self)
+        window.set_data(contribuyente)
+        window.set_model(self.contribuyentes)
+        window.show()
 
     def show(self):
         self.window.show()

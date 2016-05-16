@@ -74,6 +74,7 @@ class MainWindow(BaseWindow):
         self.rbMensual = self.builder.get_object("rbMensual")
         self.rbSustitutiva = self.builder.get_object("rbSustitutiva")
         self.txtSustituye = self.builder.get_object("txtSustituye")
+        self.btnContribuyentes = self.builder.get_object("btnContribuyentes")
 
         # load comboboxes and show window
         self.load_contribuyentes()
@@ -84,6 +85,7 @@ class MainWindow(BaseWindow):
 
     def on_btnContribuyentes_clicked(self, obj, data=None):
         contribuyente_window = ContribuyenteWindow()
+        contribuyente_window.set_parent(self)
         contribuyente_window.show()
 
     def on_btnEditar_clicked(self, obj, data=None):
@@ -142,6 +144,7 @@ class MainWindow(BaseWindow):
 
         # show window
         declaracion_window = DeclaracionWindow()
+        declaracion_window.set_parent(self)
         declaracion_window.set_model(declaracion)
         declaracion_window.show()
 
