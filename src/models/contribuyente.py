@@ -5,10 +5,6 @@ from lxml import etree
 
 
 class ContribuyenteModel:
-    _ruc = None
-    _nombre = None
-    _tipo_doc_rep = None
-    _doc_rep = None
 
     def __init__(self):
         self._data = etree.Element("ruc", numero="")
@@ -20,25 +16,22 @@ class ContribuyenteModel:
 
     def load(self, data):
         self._data = data
-        for i in self._data:
-            if i.tag == "razon_social":
-                self._nombre = i
-            elif i.tag == "tipoDocRepLegal":
-                self._tipo_doc_rep = i
-            elif i.tag == "identificacionRepLegal":
-                self._doc_rep = i
+        self._nombre = data.find('razon_social')
+        self._tipo_doc_rep = data.find('tipoDocRepLegal')
+        self._doc_rep = data.find('identificacionRepLegal')
 
     def set_ruc(self, ruc):
-        self._data.set("numero", ruc)
+        self._data.set("numero", str(ruc).strip())
 
     def set_nombre(self, nombre):
-        self._nombre.text = unicode(str(nombre))
+        nombre = " ".join(nombre.split())
+        self._nombre.text = str(nombre).strip()
 
     def set_tipo_documento(self, tipo_documento):
-        self._tipo_doc_rep.text = tipo_documento
+        self._tipo_doc_rep.text = str(tipo_documento).strip()
 
     def set_documento(self, documento):
-        self._doc_rep.text = documento
+        self._doc_rep.text = str(documento).strip()
 
     def get_ruc(self):
         return self._data.get("numero")
@@ -53,7 +46,7 @@ class ContribuyenteModel:
         return self._doc_rep.text
 
     def __str__(self):
-        return tostring(self._data)
+        return etree.tostring(self._data)
 
     def get_element(self):
         return self._data

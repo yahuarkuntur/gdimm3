@@ -9,6 +9,14 @@ from ..models.contribuyente import ContribuyenteModel
 from ..gtk.decorator import Decorator
 
 
+def strip_non_alpha(string):
+    lower = range(96, 124)
+    upper = range(64, 92)
+    upper.append(32)  # 32 = SPACE
+    stripped = (c for c in string if ord(c) in lower or ord(c) in upper)
+    return ''.join(stripped)
+
+
 class EditarContribuyenteWindow(BaseWindow):
 
     def __init__(self):
@@ -21,8 +29,13 @@ class EditarContribuyenteWindow(BaseWindow):
 
     def on_numericfield_changed(self, entry):
         text = entry.get_text()
-        text = unicode(text).strip()
+        text = str(text).strip()
         entry.set_text(''.join([i for i in text if i in '0123456789']))
+
+    def on_alphafield_changed(self, entry):
+        text = entry.get_text()
+        text = strip_non_alpha(text)
+        entry.set_text(text.upper())
 
     def on_btnSave_clicked(self, obj, data=None):
         contrib = ContribuyenteModel()
@@ -34,7 +47,7 @@ class EditarContribuyenteWindow(BaseWindow):
         if aiter:
             contrib.set_tipo_documento(self.modeloTipo.get_value(aiter, 1))
 
-        # TODO ejecutar validaciones del modelo
+        # validar modelo
         try:
             self.model.add(contrib)
             self.model.save()
@@ -68,6 +81,7 @@ class EditarContribuyenteWindow(BaseWindow):
         # connect events
         self.eRUC.connect("changed", self.on_numericfield_changed)
         self.eDocumento.connect("changed", self.on_numericfield_changed)
+        self.eRazonSocial.connect("changed", self.on_alphafield_changed)
 
         self.modeloTipo = Gtk.ListStore(str, str)
         self.modeloTipo.append(['Cédula', "C"])
