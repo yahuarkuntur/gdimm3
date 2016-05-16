@@ -4,7 +4,7 @@ import os
 import gi
 gi.require_version('Gtk', '3.0')
 from gi.repository import Gtk
-from base import BaseWindow
+from base import BaseWindow, DialogBox
 from ..models.contribuyente import ContribuyenteModel
 from ..gtk.decorator import Decorator
 
@@ -35,8 +35,12 @@ class EditarContribuyenteWindow(BaseWindow):
             contrib.set_tipo_documento(self.modeloTipo.get_value(aiter, 1))
 
         # TODO ejecutar validaciones del modelo
-        self.model.add(contrib)
-        self.model.save()
+        try:
+            self.model.add(contrib)
+            self.model.save()
+        except Exception as ex:
+            DialogBox('Ha ocurrido un error!', 'error', self.window, str(ex))
+            return
 
         # recargar listado principal
         self.parent.load_list()
@@ -67,7 +71,7 @@ class EditarContribuyenteWindow(BaseWindow):
 
         self.modeloTipo = Gtk.ListStore(str, str)
         self.modeloTipo.append(['Cédula', "C"])
-        self.modeloTipo.append(['Pasaporte', "P"])
+        # self.modeloTipo.append(['Pasaporte', "P"])
 
         self.cmbTipoDocumento.set_model(self.modeloTipo)
         self.cmbTipoDocumento.set_active(0)

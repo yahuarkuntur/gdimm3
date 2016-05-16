@@ -29,17 +29,7 @@ class ContribuyentesModel:
         return ContribuyenteModel()
 
     def add(self, contribuyente):
-        try:
-            if not (
-                contribuyente.get_ruc() and
-                contribuyente.get_nombre() and
-                contribuyente.get_tipo_documento() and
-                contribuyente.get_documento()
-            ):
-                raise Warning('Faltan datos en el contribuyente')
-        except AttributeError:
-            raise TypeError('El argumento no es un objeto tipo contribuyente')
-
+        contribuyente.validar()  # lanza excepcion
         item_index = self.exists_replace(contribuyente.get_ruc())
         if item_index is not None:
             self.lista[item_index] = contribuyente
